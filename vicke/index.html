@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vicke | قائمة الطعام</title>
+<meta name="description" content="قائمة طعام فيكي للوجبات السريعة (اللاذقية) — سندويش وشاورما وفروج ووجبات. اختار وجبتك واطلبها مباشرة عبر واتساب.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vicke | قائمة الطعام">
+<meta property="og:description" content="أشهى المأكولات والسندويشات 🍔 اختار وجبتك واطلبها مباشرة عبر واتساب">
+<meta property="og:image" content="https://menu-list.github.io/menu-demo/vicke/og.png">
+<meta property="og:url" content="https://menu-list.github.io/menu-demo/vicke/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2A1B0E; --muted:#8A7360; --cream:#FFF8EF; --card:#FFFFFF; --line:#F3DEC3;
+  --orange:#E07B1A; --orange-dk:#B85E0E; --dark:#2A1B0E; --wa:#1FAF54; --wa-dark:#178A42;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--cream);color:var(--ink);padding-bottom:110px}
+.hero{background:linear-gradient(135deg,#F2991F 0%,#D96C06 60%,#A94E02 100%);color:#fff;text-align:center;padding:30px 18px 24px;position:relative;overflow:hidden}
+.hero img.logo{width:min(230px,60vw);border-radius:22px;box-shadow:0 8px 28px rgba(0,0,0,.35);border:3px solid rgba(255,255,255,.7)}
+.hero h1{font-size:28px;font-weight:900;margin-top:12px;letter-spacing:.5px}
+.hero h1 .en{direction:ltr;display:inline-block}
+.hero p{font-weight:600;font-size:14px;color:#FFE7C4;margin-top:4px}
+.hero .tag{display:inline-block;margin-top:12px;background:#fff;color:#A94E02;padding:6px 18px;border-radius:999px;font-size:13px;font-weight:800}
+.chips{position:sticky;top:0;z-index:50;background:var(--cream);padding:10px 12px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:2px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+.chip.active{background:var(--orange);border-color:var(--orange);color:#fff}
+main{max-width:640px;margin:0 auto;padding:6px 14px}
+section.cat{margin-top:18px}
+section.cat h2{font-size:20px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+section.cat h2 .count{background:#FBE8C8;color:#9A5A10;font-size:12px;padding:2px 10px;border-radius:999px}
+.catnote{background:#FFF3DD;border:1px solid #F0D6A0;color:#7A4E0C;border-radius:14px;padding:12px 16px;margin-bottom:12px;font-size:13px;line-height:1.9}
+.catnote b{color:#A94E02}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 3px rgba(42,27,14,.06)}
+.item .info{flex:1;min-width:0}
+.item .name{font-weight:800;font-size:16px}
+.item .desc{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.6}
+.stepper{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.stepper button{width:38px;height:38px;border-radius:50%;border:2px solid var(--orange);background:#fff;color:var(--orange-dk);font-size:20px;font-weight:900;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center}
+.stepper button:active{background:var(--orange);color:#fff}
+.stepper .qty{font-weight:900;font-size:17px;min-width:24px;text-align:center}
+.stepper .add{width:auto;padding:0 18px;border-radius:999px;font-size:14px;height:38px;font-family:inherit}
+.cartbar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:#2A1B0E;padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,.3)}
+.cartbar.show{display:flex}
+.cartbar .sum{flex:1}
+.cartbar .sum .n{font-size:15px;color:#fff;font-weight:800}
+.cartbar .go{flex:0 0 auto;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:16px;padding:13px 26px;border-radius:14px;cursor:pointer}
+.cartbar .go:active{background:var(--wa-dark)}
+.overlay{position:fixed;inset:0;background:rgba(30,18,8,.6);z-index:70;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:up .25s ease;border-top:4px solid var(--orange)}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sheet h3{font-size:19px;font-weight:900;margin-bottom:4px}
+.sheet .sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.sheet .lines{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+.sheet .lines .ln{display:flex;justify-content:space-between;padding:4px 0;font-weight:600}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.field input,.field textarea{width:100%;font-family:inherit;font-size:15px;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--orange)}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;font-family:inherit;font-weight:800;font-size:15px;padding:11px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--muted)}
+.seg button.active{border-color:var(--orange);background:var(--orange);color:#fff}
+.sheet .send{width:100%;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:900;font-size:17px;padding:15px;border-radius:14px;cursor:pointer;margin-top:6px}
+.sheet .send:active{background:var(--wa-dark)}
+.sheet .cancel{width:100%;background:none;border:none;font-family:inherit;font-weight:700;font-size:14px;color:var(--muted);padding:12px;cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 16px 8px}
+footer b{color:var(--orange-dk)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="logo" src="logo.jpg" alt="Vicke">
+  <h1><span class="en">Vicke</span> للوجبات السريعة</h1>
+  <p>أشهى المأكولات والسندويشات بأجود المكونات — اللاذقية</p>
+  <span class="tag">اختار وجبتك واطلبها مباشرة عبر واتساب 👇</span>
+</header>
+
+<nav class="chips" id="chips"></nav>
+<main id="menu"></main>
+
+<div class="cartbar" id="cartbar">
+  <div class="sum"><div class="n" id="cartN"></div></div>
+  <button class="go" id="goOrder">إتمام الطلب</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <h3>إتمام الطلب 🛒</h3>
+    <p class="sub">راجع طلبك وعبّي بياناتك، وبكبسة وحدة بينبعت كل شي للمطعم عبر واتساب</p>
+    <div class="lines" id="orderLines"></div>
+    <div class="field"><label>الاسم الكريم</label><input id="fName" placeholder="مثال: علي حسن"></div>
+    <div class="field"><label>رقم الهاتف</label><input id="fPhone" inputmode="tel" placeholder="09xxxxxxxx"></div>
+    <div class="field"><label>طريقة الاستلام</label>
+      <div class="seg">
+        <button type="button" id="segD" class="active">توصيل 🛵</button>
+        <button type="button" id="segP">استلام من المطعم 🏃</button>
+      </div>
+    </div>
+    <div class="field" id="addrField"><label>عنوان التوصيل</label><input id="fAddr" placeholder="الحي، الشارع، علامة مميزة"></div>
+    <div class="field"><label>ملاحظات (اختياري)</label><textarea id="fNotes" rows="2" placeholder="مثال: الصوص على جنب"></textarea></div>
+    <button class="send" id="sendWa">تأكيد وإرسال عبر واتساب</button>
+    <button class="cancel" id="cancelOrder">رجوع للقائمة</button>
+  </div>
+</div>
+
+<footer><b>Vicke</b> — اللاذقية<br>للوجبات السريعة 🍔</footer>
+
+<script>
+const WA_NUMBER = "963940010042";
+const CART_KEY = "vicke_cart";
+const CATS = [
+  {id:"sandwich", name:"السندويش", icon:"🥪"},
+  {id:"shawarma", name:"الشاورما", icon:"🍗"},
+  {id:"farooj",   name:"الفروج", icon:"🍗"},
+  {id:"meals",    name:"الوجبات", icon:"🍽️",
+   note:"<b>🍟 جميع الوجبات تُقدَّم مع</b> البطاطا المقلية، السلطة، والصلصات الخاصة"},
+  {id:"sides",    name:"بوم فريت والسلطات", icon:"🍟"}
+];
+const MENU = [
+  // السندويش
+  {id:"sw1", cat:"sandwich", name:"زنجر", desc:"دجاج حار مقرمش مع الخس والصلصة"},
+  {id:"sw2", cat:"sandwich", name:"كريسبي", desc:"شرائح الدجاج المقرمشة"},
+  {id:"sw3", cat:"sandwich", name:"كرانشي", desc:"دجاج كرانشي مقرمش للغاية"},
+  {id:"sw4", cat:"sandwich", name:"اسكالوب", desc:"شريحة اسكالوب دجاج مقلي"},
+  {id:"sw5", cat:"sandwich", name:"تشكن برغر", desc:"برغر دجاج مشوي أو مقلي"},
+  {id:"sw6", cat:"sandwich", name:"تشيز برغر", desc:"برغر لحم مع شريحة جبنة ذائبة"},
+  {id:"sw7", cat:"sandwich", name:"برغر لحمة", desc:"برغر لحم بقر كلاسيكي"},
+  {id:"sw8", cat:"sandwich", name:"شيش طاووق", desc:"قطع دجاج متبلة ومشوية"},
+  {id:"sw9", cat:"sandwich", name:"دجاج برمجان", desc:"دجاج مع صوص البرمجان والجبن"},
+  {id:"sw10", cat:"sandwich", name:"دجاج باربيكيو", desc:"دجاج بصلصة الباربيكيو الغنية"},
+  {id:"sw11", cat:"sandwich", name:"دجاج صيني", desc:"قطع دجاج بالأسلوب الصيني والخضار"},
+  {id:"sw12", cat:"sandwich", name:"دجاج كاساديا", desc:"دجاج على الطريقة المكسيكية بخبز التورتيلا"},
+  {id:"sw13", cat:"sandwich", name:"دجاج فيكي", desc:"خلطة فيكي الخاصة المميزة"},
+  {id:"sw14", cat:"sandwich", name:"فاهيتا", desc:"دجاج مع الفلفل الرومي والبصل والبهارات"},
+  {id:"sw15", cat:"sandwich", name:"سجق", desc:"سجق متبل بالبهارات الشرقية"},
+  {id:"sw16", cat:"sandwich", name:"توشكا", desc:"لحم مع الجبن في الخبز المحمص"},
+  {id:"sw17", cat:"sandwich", name:"فروج", desc:"قطع فروج مسحب"},
+  {id:"sw18", cat:"sandwich", name:"بطاطا / سبيسيال", desc:"سندويش بطاطا مقلية مع الثوم والصلصات"},
+  // الشاورما
+  {id:"sh1", cat:"shawarma", name:"سندويش شاورما", desc:"شاورما دجاج كلاسيكية مع الثوم والمخلل"},
+  {id:"sh2", cat:"shawarma", name:"سندويش ميكس", desc:"مزيج مميز من الشاورما والأجبان"},
+  {id:"sh3", cat:"shawarma", name:"وجبة شاورما", desc:"تقدم مع البطاطا المقلية والثومية والمخلل"},
+  {id:"sh4", cat:"shawarma", name:"فتة شاورما", desc:"طبقات من الخبز المحمص والأرز والشاورما مع الصلصة"},
+  {id:"sh5", cat:"shawarma", name:"شاورما فرط", desc:"صحن شاورما صافي"},
+  {id:"sh6", cat:"shawarma", name:"شاورما خرطوشة", desc:"سندويش شاورما كبير مميز"},
+  // الفروج
+  {id:"fr1", cat:"farooj", name:"فروج مشوي", desc:"فروج كامل مشوي على الفحم مع المرفقات"},
+  {id:"fr2", cat:"farooj", name:"فروج مع رز", desc:"فروج مشوي يقدم مع الأرز المتبل"},
+  {id:"fr3", cat:"farooj", name:"فروج بروستد", desc:"فروج مقرمش مقلي بالخلطة السرية"},
+  {id:"fr4", cat:"farooj", name:"دبوس بروستد", desc:"قطع دبوس دجاج بروستد مقرمشة"},
+  {id:"fr5", cat:"farooj", name:"جوانح بروستد", desc:"جوانح دجاج بروستد مقرمشة"},
+  // الوجبات
+  {id:"m1", cat:"meals", name:"وجبة زنجر", desc:"قطع زنجر حارة مقرمشة"},
+  {id:"m2", cat:"meals", name:"وجبة كريسبي", desc:"قطع كريسبي دجاج مقرمش"},
+  {id:"m3", cat:"meals", name:"وجبة كرانشي", desc:"قطع دجاج كرانشي فائقة القرمشة"},
+  {id:"m4", cat:"meals", name:"وجبة اسكالوب", desc:"شرائح اسكالوب الدجاج المقلي"},
+  {id:"m5", cat:"meals", name:"وجبة دجاج برمجان", desc:"صدور دجاج مع صلصة البرمجان"},
+  {id:"m6", cat:"meals", name:"وجبة دجاج باربيكيو", desc:"قطع دجاج بصلصة الباربيكيو"},
+  {id:"m7", cat:"meals", name:"وجبة دجاج صيني", desc:"دجاج محضر بالصلصة الصينية والخضار"},
+  {id:"m8", cat:"meals", name:"وجبة دجاج فيكي", desc:"طبق دجاج بخلطة فيكي الخاصة"},
+  {id:"m9", cat:"meals", name:"وجبة كور دون بلو", desc:"دجاج محشو بالجبن والمرتديلا"},
+  {id:"m10", cat:"meals", name:"وجبة تشكن ألاكيف", desc:"دجاج محشو بالزبدة والأعشاب"},
+  {id:"m11", cat:"meals", name:"وجبة شيش طاووق", desc:"أسياخ شيش طاووق مشوية"},
+  // بوم فريت والسلطات
+  {id:"fs1", cat:"sides", name:"بطاطا", desc:"صحن بطاطا مقلية ذهبية"},
+  {id:"fs2", cat:"sides", name:"بطاطا سبيسيال", desc:"مع الصلصات والجبن"},
+  {id:"fs3", cat:"sides", name:"سلطة كول سلو", desc:"ملفوف وجزر بصلصة المايونيز"},
+  {id:"fs4", cat:"sides", name:"سلطة سيزر", desc:"مع قطع الخس والخبز المحمص"},
+  {id:"fs5", cat:"sides", name:"سلطة ذرة", desc:"بالصلصة الخاصة"}
+];
+const byId = Object.fromEntries(MENU.map(i=>[i.id,i]));
+let cart = {};
+try{ cart = JSON.parse(localStorage.getItem(CART_KEY)||"{}"); }catch(e){ cart={}; }
+let activeCat = "all";
+let delivery = true;
+
+const $ = id => document.getElementById(id);
+
+function save(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+
+function renderChips(){
+  const el = $("chips");
+  el.innerHTML = `<button class="chip${activeCat==="all"?" active":""}" data-c="all">الكل 🍽️</button>` +
+    CATS.map(c=>`<button class="chip${activeCat===c.id?" active":""}" data-c="${c.id}">${c.icon} ${c.name}</button>`).join("");
+  el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ activeCat=b.dataset.c; renderChips(); renderMenu(); });
+}
+function stepperHTML(id){
+  const q = cart[id]||0;
+  if(q===0) return `<div class="stepper"><button class="add" onclick="chQty('${id}',1)">أضف +</button></div>`;
+  return `<div class="stepper"><button onclick="chQty('${id}',1)">+</button><span class="qty">${q}</span><button onclick="chQty('${id}',-1)">−</button></div>`;
+}
+function renderMenu(){
+  const main = $("menu");
+  const cats = activeCat==="all" ? CATS : CATS.filter(c=>c.id===activeCat);
+  main.innerHTML = cats.map(c=>{
+    const items = MENU.filter(i=>i.cat===c.id);
+    return `<section class="cat" id="cat-${c.id}"><h2>${c.icon} ${c.name} <span class="count">${items.length}</span></h2>` +
+      (c.note?`<div class="catnote">${c.note}</div>`:"") +
+      items.map(i=>`<div class="item"><div class="info"><div class="name">${i.name}</div>` +
+        (i.desc?`<div class="desc">${i.desc}</div>`:"") +
+        `</div>${stepperHTML(i.id)}</div>`).join("") + `</section>`;
+  }).join("");
+  updateBar();
+}
+function chQty(id,d){
+  cart[id]=(cart[id]||0)+d;
+  if(cart[id]<=0) delete cart[id];
+  save(); renderMenu();
+}
+function updateBar(){
+  const n = cartCount(), bar = $("cartbar");
+  if(n===0){ bar.classList.remove("show"); return; }
+  bar.classList.add("show");
+  $("cartN").textContent = `🛒 ${n} ${n===1?"صنف":n===2?"صنفان":"أصناف"}`;
+}
+function openOrder(){
+  if(cartCount()===0) return;
+  $("orderLines").innerHTML = Object.entries(cart).map(([id,q])=>{
+    return `<div class="ln"><span>${q} × ${byId[id].name}</span></div>`;
+  }).join("");
+  $("overlay").classList.add("show");
+  document.body.style.overflow="hidden";
+}
+function closeOrder(){ $("overlay").classList.remove("show"); document.body.style.overflow=""; }
+
+$("goOrder").onclick = openOrder;
+$("cancelOrder").onclick = closeOrder;
+$("overlay").addEventListener("click", e=>{ if(e.target===$("overlay")) closeOrder(); });
+$("segD").onclick = ()=>{ delivery=true; $("segD").classList.add("active"); $("segP").classList.remove("active"); $("addrField").style.display=""; };
+$("segP").onclick = ()=>{ delivery=false; $("segP").classList.add("active"); $("segD").classList.remove("active"); $("addrField").style.display="none"; };
+
+$("sendWa").onclick = ()=>{
+  const name=$("fName").value.trim(), phone=$("fPhone").value.trim();
+  if(!name){ alert("فضلاً اكتب الاسم الكريم"); $("fName").focus(); return; }
+  if(!phone){ alert("فضلاً اكتب رقم الهاتف"); $("fPhone").focus(); return; }
+  const addr=$("fAddr").value.trim(), notes=$("fNotes").value.trim();
+  const L=[];
+  L.push("🍔 طلب جديد — Vicke");
+  L.push("———————————");
+  Object.entries(cart).forEach(([id,q])=>{ L.push(`${q} × ${byId[id].name}`); });
+  L.push("———————————");
+  L.push(`👤 الاسم: ${name}`);
+  L.push(`📞 الهاتف: ${phone}`);
+  L.push(delivery ? `🛵 توصيل إلى: ${addr||"—"}` : "🏃 استلام من المطعم");
+  if(notes) L.push(`📝 ملاحظات: ${notes}`);
+  window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(L.join("\n")), "_blank");
+};
+
+renderChips(); renderMenu();
+</script>
+
+<script>
+/* Menu-open tracking (2026-10-19): fire-and-forget ping so Ali can see which
+   restaurant owner opened their menu demo link. No cookies, no PII — the server
+   only stores the menu slug + timestamp (+hashed IP for country, same as the
+   clinic demos' analytics). One ping per browser tab session. */
+(function(){try{
+  var m=location.pathname.match(/\/menu-demo\/([a-z0-9-]+)\/?(?:[?#]|$)/);
+  if(!m)return;
+  var slug=m[1];
+  if(sessionStorage.getItem('menu_open_logged')===slug)return;
+  sessionStorage.setItem('menu_open_logged',slug);
+  fetch('https://kindly-anaconda-422.convex.site/trackVisit',{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=UTF-8'},
+    body:JSON.stringify({type:'menu_open',label:slug,path:'/menu/'+slug}),
+    keepalive:true
+  }).catch(function(){});
+}catch(e){}})();
+</script>
+</body>
+</html>
