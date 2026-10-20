@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>شاورما وبيتزا السندباد | قائمة الطعام</title>
+<meta name="description" content="قائمة طعام شاورما وبيتزا السندباد (اللاذقية) — شاورما وبيتزا وفطائر. اختار وجبتك واطلبها مباشرة عبر واتساب.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="شاورما وبيتزا السندباد | قائمة الطعام">
+<meta property="og:description" content="شاورما وبيتزا على الأصول 🌯🍕 اختار وجبتك واطلبها مباشرة عبر واتساب">
+<meta property="og:image" content="https://menu-list.github.io/menu-demo/sindbad/og.png">
+<meta property="og:url" content="https://menu-list.github.io/menu-demo/sindbad/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#241207; --muted:#8A7360; --cream:#FFF9F0; --card:#FFFFFF; --line:#F0DFC2;
+  --orange:#E8860B; --orange-dk:#B85E0E; --dark:#17100A; --wa:#1FAF54; --wa-dark:#178A42;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--cream);color:var(--ink);padding-bottom:110px}
+.hero{background:#0d0906;color:#fff;text-align:center;padding:0 0 22px;overflow:hidden}
+.hero img.logo{width:100%;display:block;max-height:300px;object-fit:cover}
+.hero h1{font-size:27px;font-weight:900;margin-top:16px;padding:0 16px}
+.hero h1 .accent{color:#F5A623}
+.hero p{font-weight:600;font-size:14px;color:#D8C3A5;margin-top:4px;padding:0 16px}
+.hero .tag{display:inline-block;margin-top:12px;background:var(--orange);color:#fff;padding:6px 18px;border-radius:999px;font-size:13px;font-weight:800}
+.trial{max-width:640px;margin:14px auto 0;padding:0 14px}
+.trial .box{background:#FFF3D6;border:2px dashed #E8A33D;color:#7A4E0C;border-radius:14px;padding:12px 16px;font-size:14px;font-weight:700;text-align:center;line-height:1.9}
+.chips{position:sticky;top:0;z-index:50;background:var(--cream);padding:10px 12px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:2px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+.chip.active{background:var(--dark);border-color:var(--dark);color:#F5A623}
+main{max-width:640px;margin:0 auto;padding:6px 14px}
+section.cat{margin-top:18px}
+section.cat h2{font-size:20px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+section.cat h2 .count{background:#FBE8C8;color:#9A5A10;font-size:12px;padding:2px 10px;border-radius:999px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 3px rgba(36,18,7,.06)}
+.item .info{flex:1;min-width:0}
+.item .name{font-weight:800;font-size:16px}
+.item .desc{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.6}
+.item .price{font-size:14px;font-weight:800;color:#B85E0E;margin-top:2px}
+.item .size{display:inline-block;background:#FDEBD3;color:#9A5A10;font-size:11px;font-weight:800;padding:1px 9px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.stepper{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.stepper button{width:38px;height:38px;border-radius:50%;border:2px solid var(--dark);background:#fff;color:var(--dark);font-size:20px;font-weight:900;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center}
+.stepper button:active{background:var(--dark);color:#F5A623}
+.stepper .qty{font-weight:900;font-size:17px;min-width:24px;text-align:center}
+.stepper .add{width:auto;padding:0 18px;border-radius:999px;font-size:14px;height:38px;font-family:inherit}
+.cartbar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:#17100A;padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,.35)}
+.cartbar.show{display:flex}
+.cartbar .sum{flex:1}
+.cartbar .sum .n{font-size:15px;color:#fff;font-weight:800}
+.cartbar .sum .t{font-size:13px;color:#F5A623;font-weight:700}
+.cartbar .go{flex:0 0 auto;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:16px;padding:13px 26px;border-radius:14px;cursor:pointer}
+.cartbar .go:active{background:var(--wa-dark)}
+.overlay{position:fixed;inset:0;background:rgba(20,12,4,.6);z-index:70;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:up .25s ease;border-top:4px solid var(--orange)}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sheet h3{font-size:19px;font-weight:900;margin-bottom:4px}
+.sheet .sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.sheet .lines{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+.sheet .lines .ln{display:flex;justify-content:space-between;padding:4px 0;font-weight:600}
+.sheet .lines .total{border-top:2px dashed var(--line);margin-top:6px;padding-top:8px;font-weight:900;font-size:16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.field input,.field textarea{width:100%;font-family:inherit;font-size:15px;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--orange)}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;font-family:inherit;font-weight:800;font-size:15px;padding:11px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--muted)}
+.seg button.active{border-color:var(--dark);background:var(--dark);color:#F5A623}
+.sheet .send{width:100%;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:900;font-size:17px;padding:15px;border-radius:14px;cursor:pointer;margin-top:6px}
+.sheet .send:active{background:var(--wa-dark)}
+.sheet .cancel{width:100%;background:none;border:none;font-family:inherit;font-weight:700;font-size:14px;color:var(--muted);padding:12px;cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 16px 8px}
+footer b{color:var(--orange-dk)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="logo" src="logo.jpg" alt="شاورما وبيتزا السندباد">
+  <h1>شاورما وبيتزا <span class="accent">السندباد</span></h1>
+  <p>شاورما وبيتزا وفطائر على الأصول — اللاذقية</p>
+  <span class="tag">اختار وجبتك واطلبها مباشرة عبر واتساب 👇</span>
+</header>
+
+<div class="trial"><div class="box">🧪 قائمة تجريبية حالياً — الأصناف والأسعار المعروضة للتجريب، وسيتم اعتماد قائمة السندباد الرسمية قريباً</div></div>
+
+<nav class="chips" id="chips"></nav>
+<main id="menu"></main>
+
+<div class="cartbar" id="cartbar">
+  <div class="sum"><div class="n" id="cartN"></div><div class="t" id="cartT"></div></div>
+  <button class="go" id="goOrder">إتمام الطلب</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <h3>إتمام الطلب 🛒</h3>
+    <p class="sub">راجع طلبك وعبّي بياناتك، وبكبسة وحدة بينبعت كل شي للمطعم عبر واتساب</p>
+    <div class="lines" id="orderLines"></div>
+    <div class="field"><label>الاسم الكريم</label><input id="fName" placeholder="مثال: علي حسن"></div>
+    <div class="field"><label>رقم الهاتف</label><input id="fPhone" inputmode="tel" placeholder="09xxxxxxxx"></div>
+    <div class="field"><label>طريقة الاستلام</label>
+      <div class="seg">
+        <button type="button" id="segD" class="active">توصيل 🛵</button>
+        <button type="button" id="segP">استلام من المطعم 🏃</button>
+      </div>
+    </div>
+    <div class="field" id="addrField"><label>عنوان التوصيل</label><input id="fAddr" placeholder="الحي، الشارع، علامة مميزة"></div>
+    <div class="field"><label>ملاحظات (اختياري)</label><textarea id="fNotes" rows="2" placeholder="مثال: الصوص على جنب"></textarea></div>
+    <button class="send" id="sendWa">تأكيد وإرسال عبر واتساب</button>
+    <button class="cancel" id="cancelOrder">رجوع للقائمة</button>
+  </div>
+</div>
+
+<footer><b>شاورما وبيتزا السندباد</b> — اللاذقية<br>رحلة طعم ما بتنتسى ⛵</footer>
+
+<script>
+const WA_NUMBER = "963930293324";
+const CART_KEY = "sindbad_cart";
+const CUR = "ل.س";
+const CATS = [
+ {
+  "id": "a_shawarma",
+  "name": "الشاورما",
+  "icon": "🌯"
+ },
+ {
+  "id": "a_sandwiches",
+  "name": "السندويشات",
+  "icon": "🥪"
+ },
+ {
+  "id": "a_burger",
+  "name": "البرغر",
+  "icon": "🍔"
+ },
+ {
+  "id": "a_potato",
+  "name": "البطاطا",
+  "icon": "🍟"
+ },
+ {
+  "id": "a_meals",
+  "name": "الوجبات",
+  "icon": "🍱"
+ },
+ {
+  "id": "b_pizza",
+  "name": "البيتزا",
+  "icon": "🍕"
+ },
+ {
+  "id": "b_fatayer",
+  "name": "الفطائر",
+  "icon": "🥐"
+ },
+ {
+  "id": "b_cheese",
+  "name": "فطائر الأجبان والألبان",
+  "icon": "🧀"
+ },
+ {
+  "id": "b_other",
+  "name": "أصناف أخرى وحلو",
+  "icon": "🍫"
+ }
+];
+const MENU = [
+ {
+  "id": "a_s1",
+  "cat": "a_sandwiches",
+  "name": "ساندويش كريسبي",
+  "price": 350,
+  "desc": "قطعتين كريسبي، خس، بطاطا، وصوص الكوكتيل"
+ },
+ {
+  "id": "a_s2",
+  "cat": "a_sandwiches",
+  "name": "ساندويش شيش",
+  "price": 350,
+  "desc": "سيخ شيش، بطاطا مقلية، وكريم ثوم"
+ },
+ {
+  "id": "a_s3",
+  "cat": "a_sandwiches",
+  "name": "ساندويش مكسيكي",
+  "price": 350
+ },
+ {
+  "id": "a_s4",
+  "cat": "a_sandwiches",
+  "name": "ساندويش فرانسيسكو",
+  "price": 350
+ },
+ {
+  "id": "a_s5",
+  "cat": "a_sandwiches",
+  "name": "ساندويش فروج",
+  "price": 225
+ },
+ {
+  "id": "a_s7",
+  "cat": "a_sandwiches",
+  "name": "Fajita Sandwich",
+  "price": 350,
+  "desc": "دجاج، فليفلة ملونة، بصل، صوص، جبنة، جزر"
+ },
+ {
+  "id": "a_s8",
+  "cat": "a_sandwiches",
+  "name": "Escalope Sandwich",
+  "price": 350,
+  "desc": "إسكالوب، بطاطا، كاتشب، مايونيز"
+ },
+ {
+  "id": "a_s9",
+  "cat": "a_sandwiches",
+  "name": "Mixed Sandwich",
+  "price": 400,
+  "desc": "شاورما مع دجاج كريسبي أو إسكالوب"
+ },
+ {
+  "id": "a_w1",
+  "cat": "a_shawarma",
+  "name": "ساندويش شاورما",
+  "price": 250,
+  "desc": "شاورما دجاج، مخلل، كريم ثوم"
+ },
+ {
+  "id": "a_w2",
+  "cat": "a_shawarma",
+  "name": "ربع كيلو شاورما",
+  "price": 450
+ },
+ {
+  "id": "a_w3",
+  "cat": "a_shawarma",
+  "name": "وجبة شاورما",
+  "price": 450,
+  "desc": "وجبة عادية"
+ },
+ {
+  "id": "a_w4",
+  "cat": "a_shawarma",
+  "name": "وجبة شاورما دبل",
+  "price": 600
+ },
+ {
+  "id": "a_w5",
+  "cat": "a_shawarma",
+  "name": "وجبة شاورما بانيه",
+  "price": 550
+ },
+ {
+  "id": "a_b1",
+  "cat": "a_burger",
+  "name": "تشيز تشكن برغر",
+  "price": 380
+ },
+ {
+  "id": "a_b2",
+  "cat": "a_burger",
+  "name": "ساندويش ديفا",
+  "price": 400
+ },
+ {
+  "id": "a_b3",
+  "cat": "a_burger",
+  "name": "تشكن برغر كلاسيك",
+  "price": 300
+ },
+ {
+  "id": "a_b5",
+  "cat": "a_burger",
+  "name": "Classic Beef Burger",
+  "price": 370,
+  "desc": "لحمة برغر، بطاطا، خس، كولسلو، مايونيز، بندورة"
+ },
+ {
+  "id": "a_b6",
+  "cat": "a_burger",
+  "name": "Beef Cheeseburger",
+  "price": 410,
+  "desc": "لحمة برغر، بطاطا، خس، طماطم، جبنة، كولسلو"
+ },
+ {
+  "id": "a_p1",
+  "cat": "a_potato",
+  "name": "ساندويش بطاطا خبز",
+  "price": 100,
+  "desc": "بطاطا حرّة"
+ },
+ {
+  "id": "a_p2",
+  "cat": "a_potato",
+  "name": "سبيسيال",
+  "price": 200,
+  "desc": "ساندويش بطاطا مع جبنة، ذرة وفطر"
+ },
+ {
+  "id": "a_p3",
+  "cat": "a_potato",
+  "name": "بطاطا مع جبنة",
+  "price": 170,
+  "desc": "ساندويش بطاطا مع جبنة حرّة"
+ },
+ {
+  "id": "a_p4",
+  "cat": "a_potato",
+  "name": "Boom Frit",
+  "price": 120,
+  "desc": "بطاطا مقلية مع كاتشب"
+ },
+ {
+  "id": "a_m1",
+  "cat": "a_meals",
+  "name": "وجبة اسكالوب",
+  "price": 580
+ },
+ {
+  "id": "a_m2",
+  "cat": "a_meals",
+  "name": "وجبة كريسبي",
+  "price": 550
+ },
+ {
+  "id": "a_m3",
+  "cat": "a_meals",
+  "name": "وجبة زنجر",
+  "price": 650
+ },
+ {
+  "id": "a_m4",
+  "cat": "a_meals",
+  "name": "فروج",
+  "price": 1000
+ },
+ {
+  "id": "a_m5",
+  "cat": "a_meals",
+  "name": "نصف فروج",
+  "price": 600,
+  "desc": "نصف فروج متبّل مع بطاطا"
+ },
+ {
+  "id": "a_m7",
+  "cat": "a_meals",
+  "name": "Shish Meal",
+  "price": 580,
+  "desc": "سيخ شيش، بطاطا، ثوم، مخلل، كولسلو"
+ },
+ {
+  "id": "b_pz1f",
+  "cat": "b_pizza",
+  "name": "بيتزا فصول",
+  "price": 500,
+  "size": "عائلي"
+ },
+ {
+  "id": "b_pz1m",
+  "cat": "b_pizza",
+  "name": "بيتزا فصول",
+  "price": 250,
+  "size": "وسط"
+ },
+ {
+  "id": "b_pz2f",
+  "cat": "b_pizza",
+  "name": "بيتزا مكسيكانو",
+  "price": 500,
+  "size": "عائلي"
+ },
+ {
+  "id": "b_pz2m",
+  "cat": "b_pizza",
+  "name": "بيتزا مكسيكانو",
+  "price": 250,
+  "size": "وسط"
+ },
+ {
+  "id": "b_pz3f",
+  "cat": "b_pizza",
+  "name": "بيتزا سجق",
+  "price": 500,
+  "size": "عائلي"
+ },
+ {
+  "id": "b_pz3m",
+  "cat": "b_pizza",
+  "name": "بيتزا سجق",
+  "price": 250,
+  "size": "وسط"
+ },
+ {
+  "id": "b_pz4f",
+  "cat": "b_pizza",
+  "name": "بيتزا خضار",
+  "price": 500,
+  "size": "عائلي"
+ },
+ {
+  "id": "b_pz4m",
+  "cat": "b_pizza",
+  "name": "بيتزا خضار",
+  "price": 250,
+  "size": "وسط"
+ },
+ {
+  "id": "b_pz5f",
+  "cat": "b_pizza",
+  "name": "بيتزا مرغريتا",
+  "price": 500,
+  "size": "عائلي"
+ },
+ {
+  "id": "b_pz5m",
+  "cat": "b_pizza",
+  "name": "بيتزا مرغريتا",
+  "price": 250,
+  "size": "وسط"
+ },
+ {
+  "id": "b_pz6f",
+  "cat": "b_pizza",
+  "name": "بيتزا فطر",
+  "price": 500,
+  "size": "عائلي"
+ },
+ {
+  "id": "b_pz6m",
+  "cat": "b_pizza",
+  "name": "بيتزا فطر",
+  "price": 250,
+  "size": "وسط"
+ },
+ {
+  "id": "b_f1",
+  "cat": "b_fatayer",
+  "name": "فطيرة باباي",
+  "price": 100
+ },
+ {
+  "id": "b_f2",
+  "cat": "b_fatayer",
+  "name": "مكسيكانو",
+  "price": 90
+ },
+ {
+  "id": "b_f3",
+  "cat": "b_fatayer",
+  "name": "فاهيتا",
+  "price": 90
+ },
+ {
+  "id": "b_f4",
+  "cat": "b_fatayer",
+  "name": "قشقوان فطر",
+  "price": 75
+ },
+ {
+  "id": "b_f5",
+  "cat": "b_fatayer",
+  "name": "قشقوان سجق",
+  "price": 75
+ },
+ {
+  "id": "b_f6",
+  "cat": "b_fatayer",
+  "name": "طوشكا",
+  "price": 75
+ },
+ {
+  "id": "b_f7",
+  "cat": "b_fatayer",
+  "name": "بيتزا صاج",
+  "price": 75
+ },
+ {
+  "id": "b_f8",
+  "cat": "b_fatayer",
+  "name": "بيتزا سمول",
+  "price": 75
+ },
+ {
+  "id": "b_f9",
+  "cat": "b_fatayer",
+  "name": "سجق",
+  "price": 60
+ },
+ {
+  "id": "b_f10",
+  "cat": "b_fatayer",
+  "name": "بطاطا وقشقوان",
+  "price": 60
+ },
+ {
+  "id": "b_f11",
+  "cat": "b_fatayer",
+  "name": "سلق",
+  "price": 50
+ },
+ {
+  "id": "b_c1",
+  "cat": "b_cheese",
+  "name": "جبنة زعتر أخضر",
+  "price": 100
+ },
+ {
+  "id": "b_c2",
+  "cat": "b_cheese",
+  "name": "جبنة نعناع",
+  "price": 75
+ },
+ {
+  "id": "b_c3",
+  "cat": "b_cheese",
+  "name": "جبنة كردية",
+  "price": 75
+ },
+ {
+  "id": "b_c4",
+  "cat": "b_cheese",
+  "name": "جبنة سادة",
+  "price": 50
+ },
+ {
+  "id": "b_c5",
+  "cat": "b_cheese",
+  "name": "جبنة بيروتية",
+  "price": 50
+ },
+ {
+  "id": "b_c6",
+  "cat": "b_cheese",
+  "name": "جبنة كيري",
+  "price": 50
+ },
+ {
+  "id": "b_c7",
+  "cat": "b_cheese",
+  "name": "جبنة وزبدة",
+  "price": 50
+ },
+ {
+  "id": "b_o1",
+  "cat": "b_other",
+  "name": "لحمة سودا",
+  "price": 250
+ },
+ {
+  "id": "b_o2",
+  "cat": "b_other",
+  "name": "مرتديلا",
+  "price": 250
+ },
+ {
+  "id": "b_o3",
+  "cat": "b_other",
+  "name": "شوكولا",
+  "price": 250
+ },
+ {
+  "id": "b_o4",
+  "cat": "b_other",
+  "name": "شيش",
+  "price": 60
+ },
+ {
+  "id": "b_o5",
+  "cat": "b_other",
+  "name": "زعتر",
+  "price": 50
+ },
+ {
+  "id": "b_o6",
+  "cat": "b_other",
+  "name": "فليفلة",
+  "price": 50
+ },
+ {
+  "id": "b_o7",
+  "cat": "b_other",
+  "name": "زيتون",
+  "price": 50
+ },
+ {
+  "id": "b_o8",
+  "cat": "b_other",
+  "name": "شوكولا وزبدة",
+  "price": 50
+ }
+];
+const byId = Object.fromEntries(MENU.map(i=>[i.id,i]));
+let cart = {};
+try{ cart = JSON.parse(localStorage.getItem(CART_KEY)||"{}"); }catch(e){ cart={}; }
+let activeCat = "all";
+let delivery = true;
+
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("en-US");
+
+function save(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+function cartTotal(){ return Object.entries(cart).reduce((a,[id,q])=>a+(byId[id].price||0)*q,0); }
+function itemLabel(i){
+  let s = i.name;
+  if(i.size) s += ` <span class="size">${i.size}</span>`;
+  return s;
+}
+function itemPlain(i){ return i.size ? `${i.name} (${i.size})` : i.name; }
+
+function renderChips(){
+  const el = $("chips");
+  el.innerHTML = `<button class="chip${activeCat==="all"?" active":""}" data-c="all">الكل 🍽️</button>` +
+    CATS.map(c=>`<button class="chip${activeCat===c.id?" active":""}" data-c="${c.id}">${c.icon} ${c.name}</button>`).join("");
+  el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ activeCat=b.dataset.c; renderChips(); renderMenu(); });
+}
+function stepperHTML(id){
+  const q = cart[id]||0;
+  if(q===0) return `<div class="stepper"><button class="add" onclick="chQty('${id}',1)">أضف +</button></div>`;
+  return `<div class="stepper"><button onclick="chQty('${id}',1)">+</button><span class="qty">${q}</span><button onclick="chQty('${id}',-1)">−</button></div>`;
+}
+function renderMenu(){
+  const main = $("menu");
+  const cats = activeCat==="all" ? CATS : CATS.filter(c=>c.id===activeCat);
+  main.innerHTML = cats.map(c=>{
+    const items = MENU.filter(i=>i.cat===c.id);
+    return `<section class="cat" id="cat-${c.id}"><h2>${c.icon} ${c.name} <span class="count">${items.length}</span></h2>` +
+      items.map(i=>`<div class="item"><div class="info"><div class="name">${itemLabel(i)}</div>` +
+        (i.desc?`<div class="desc">${i.desc}</div>`:"") +
+        `<div class="price">${fmt(i.price)} ${CUR}</div></div>${stepperHTML(i.id)}</div>`).join("") + `</section>`;
+  }).join("");
+  updateBar();
+}
+function chQty(id,d){
+  cart[id]=(cart[id]||0)+d;
+  if(cart[id]<=0) delete cart[id];
+  save(); renderMenu();
+}
+function updateBar(){
+  const n = cartCount(), bar = $("cartbar");
+  if(n===0){ bar.classList.remove("show"); return; }
+  bar.classList.add("show");
+  $("cartN").textContent = `🛒 ${n} ${n===1?"صنف":n===2?"صنفان":"أصناف"}`;
+  $("cartT").textContent = `المجموع: ${fmt(cartTotal())} ${CUR}`;
+}
+function openOrder(){
+  if(cartCount()===0) return;
+  $("orderLines").innerHTML = Object.entries(cart).map(([id,q])=>{
+    const i=byId[id];
+    return `<div class="ln"><span>${q} × ${itemPlain(i)}</span><span>${fmt(i.price*q)} ${CUR}</span></div>`;
+  }).join("") +
+  `<div class="ln total"><span>المجموع</span><span>${fmt(cartTotal())} ${CUR}</span></div>`;
+  $("overlay").classList.add("show");
+  document.body.style.overflow="hidden";
+}
+function closeOrder(){ $("overlay").classList.remove("show"); document.body.style.overflow=""; }
+
+$("goOrder").onclick = openOrder;
+$("cancelOrder").onclick = closeOrder;
+$("overlay").addEventListener("click", e=>{ if(e.target===$("overlay")) closeOrder(); });
+$("segD").onclick = ()=>{ delivery=true; $("segD").classList.add("active"); $("segP").classList.remove("active"); $("addrField").style.display=""; };
+$("segP").onclick = ()=>{ delivery=false; $("segP").classList.add("active"); $("segD").classList.remove("active"); $("addrField").style.display="none"; };
+
+$("sendWa").onclick = ()=>{
+  const name=$("fName").value.trim(), phone=$("fPhone").value.trim();
+  if(!name){ alert("فضلاً اكتب الاسم الكريم"); $("fName").focus(); return; }
+  if(!phone){ alert("فضلاً اكتب رقم الهاتف"); $("fPhone").focus(); return; }
+  const addr=$("fAddr").value.trim(), notes=$("fNotes").value.trim();
+  const L=[];
+  L.push("⛵ طلب جديد — شاورما وبيتزا السندباد");
+  L.push("———————————");
+  Object.entries(cart).forEach(([id,q])=>{ const i=byId[id]; L.push(`${q} × ${itemPlain(i)} = ${fmt(i.price*q)} ${CUR}`); });
+  L.push("———————————");
+  L.push(`المجموع: ${fmt(cartTotal())} ${CUR}`);
+  L.push(`👤 الاسم: ${name}`);
+  L.push(`📞 الهاتف: ${phone}`);
+  L.push(delivery ? `🛵 توصيل إلى: ${addr||"—"}` : "🏃 استلام من المطعم");
+  if(notes) L.push(`📝 ملاحظات: ${notes}`);
+  window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(L.join("\n")), "_blank");
+};
+
+renderChips(); renderMenu();
+</script>
+
+<script>
+/* Menu-open tracking (2026-10-19): fire-and-forget ping so Ali can see which
+   restaurant owner opened their menu demo link. No cookies, no PII — the server
+   only stores the menu slug + timestamp (+hashed IP for country, same as the
+   clinic demos' analytics). One ping per browser tab session. */
+(function(){try{
+  var m=location.pathname.match(/\/menu-demo\/([a-z0-9-]+)\/?(?:[?#]|$)/);
+  if(!m)return;
+  var slug=m[1];
+  if(sessionStorage.getItem('menu_open_logged')===slug)return;
+  sessionStorage.setItem('menu_open_logged',slug);
+  fetch('https://kindly-anaconda-422.convex.site/trackVisit',{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=UTF-8'},
+    body:JSON.stringify({type:'menu_open',label:slug,path:'/menu/'+slug}),
+    keepalive:true
+  }).catch(function(){});
+}catch(e){}})();
+</script>
+</body>
+</html>
