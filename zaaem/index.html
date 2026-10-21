@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AL Zaaem الزعيم | قائمة الطعام</title>
+<meta name="description" content="قائمة طعام مطعم الزعيم (اللاذقية) — بيتزا وبرغر وشاورما ومشاوي. اختار وجبتك واطلبها مباشرة عبر واتساب.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AL Zaaem الزعيم | قائمة الطعام">
+<meta property="og:description" content="طعم الزعامة 👑 اختار وجبتك واطلبها مباشرة عبر واتساب">
+<meta property="og:image" content="https://menu-list.github.io/menu-demo/zaaem/og.png">
+<meta property="og:url" content="https://menu-list.github.io/menu-demo/zaaem/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#221213; --muted:#8F7572; --cream:#FBF3F0; --card:#FFFFFF; --line:#F0D9D2;
+  --red:#D92323; --red-dk:#A31515; --dark:#26262B; --wa:#1FAF54; --wa-dark:#178A42;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--cream);color:var(--ink);padding-bottom:110px}
+.hero{background:radial-gradient(circle at 50% 0%,#45454E 0%,#26262B 78%);color:#fff;text-align:center;padding:28px 18px 24px;position:relative;overflow:hidden}
+.hero img.logo{width:min(240px,62vw);border-radius:24px;box-shadow:0 10px 32px rgba(0,0,0,.55);border:3px solid #fff}
+.hero h1{font-size:28px;font-weight:900;margin-top:14px}
+.hero h1 .en{direction:ltr;display:inline-block;color:var(--red)}
+.hero h1 .ar{color:#fff}
+.hero p{font-weight:600;font-size:14px;color:#C9C9CF;margin-top:4px}
+.hero .tag{display:inline-block;margin-top:12px;background:var(--red);color:#fff;padding:6px 18px;border-radius:999px;font-size:13px;font-weight:800}
+.chips{position:sticky;top:0;z-index:50;background:var(--cream);padding:10px 12px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:2px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+.chip.active{background:var(--red);border-color:var(--red);color:#fff}
+main{max-width:640px;margin:0 auto;padding:6px 14px}
+section.cat{margin-top:18px}
+section.cat h2{font-size:20px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+section.cat h2 .count{background:#F8DCDC;color:#A31515;font-size:12px;padding:2px 10px;border-radius:999px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 3px rgba(34,18,19,.06)}
+.item .info{flex:1;min-width:0}
+.item .name{font-weight:800;font-size:16px}
+.item .desc{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.6}
+.stepper{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.stepper button{width:38px;height:38px;border-radius:50%;border:2px solid var(--red);background:#fff;color:var(--red);font-size:20px;font-weight:900;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center}
+.stepper button:active{background:var(--red);color:#fff}
+.stepper .qty{font-weight:900;font-size:17px;min-width:24px;text-align:center}
+.stepper .add{width:auto;padding:0 18px;border-radius:999px;font-size:14px;height:38px;font-family:inherit}
+.cartbar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:var(--dark);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,.35)}
+.cartbar.show{display:flex}
+.cartbar .sum{flex:1}
+.cartbar .sum .n{font-size:15px;color:#fff;font-weight:800}
+.cartbar .go{flex:0 0 auto;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:16px;padding:13px 26px;border-radius:14px;cursor:pointer}
+.cartbar .go:active{background:var(--wa-dark)}
+.overlay{position:fixed;inset:0;background:rgba(18,10,10,.6);z-index:70;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:up .25s ease;border-top:4px solid var(--red)}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sheet h3{font-size:19px;font-weight:900;margin-bottom:4px}
+.sheet .sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.sheet .lines{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+.sheet .lines .ln{display:flex;justify-content:space-between;padding:4px 0;font-weight:600}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.field input,.field textarea{width:100%;font-family:inherit;font-size:15px;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--red)}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;font-family:inherit;font-weight:800;font-size:15px;padding:11px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--muted)}
+.seg button.active{border-color:var(--red);background:var(--red);color:#fff}
+.sheet .send{width:100%;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:900;font-size:17px;padding:15px;border-radius:14px;cursor:pointer;margin-top:6px}
+.sheet .send:active{background:var(--wa-dark)}
+.sheet .cancel{width:100%;background:none;border:none;font-family:inherit;font-weight:700;font-size:14px;color:var(--muted);padding:12px;cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 16px 8px}
+footer b{color:var(--red-dk)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="logo" src="logo.jpg" alt="AL Zaaem">
+  <h1><span class="ar">مطعم</span> <span class="en">AL ZAAEM</span></h1>
+  <p>الزعيم — بيتزا • برغر • شاورما • مشاوي — اللاذقية</p>
+  <span class="tag">اختار وجبتك واطلبها مباشرة عبر واتساب 👇</span>
+</header>
+
+<nav class="chips" id="chips"></nav>
+<main id="menu"></main>
+
+<div class="cartbar" id="cartbar">
+  <div class="sum"><div class="n" id="cartN"></div></div>
+  <button class="go" id="goOrder">إتمام الطلب</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <h3>إتمام الطلب 🛒</h3>
+    <p class="sub">راجع طلبك وعبّي بياناتك، وبكبسة وحدة بينبعت كل شي للمطعم عبر واتساب</p>
+    <div class="lines" id="orderLines"></div>
+    <div class="field"><label>الاسم الكريم</label><input id="fName" placeholder="مثال: علي حسن"></div>
+    <div class="field"><label>رقم الهاتف</label><input id="fPhone" inputmode="tel" placeholder="09xxxxxxxx"></div>
+    <div class="field"><label>طريقة الاستلام</label>
+      <div class="seg">
+        <button type="button" id="segD" class="active">توصيل 🛵</button>
+        <button type="button" id="segP">استلام من المطعم 🏃</button>
+      </div>
+    </div>
+    <div class="field" id="addrField"><label>عنوان التوصيل</label><input id="fAddr" placeholder="الحي، الشارع، علامة مميزة"></div>
+    <div class="field"><label>ملاحظات (اختياري)</label><textarea id="fNotes" rows="2" placeholder="مثال: الصوص على جنب"></textarea></div>
+    <button class="send" id="sendWa">تأكيد وإرسال عبر واتساب</button>
+    <button class="cancel" id="cancelOrder">رجوع للقائمة</button>
+  </div>
+</div>
+
+<footer><b>AL Zaaem الزعيم</b> — اللاذقية<br>طعم الزعامة 👑</footer>
+
+<script>
+const WA_NUMBER = "963965402196";
+const CART_KEY = "zaaem_cart";
+const CATS = [
+  {id:"pizza", name:"البيتزا", icon:"🍕"},
+  {id:"burger", name:"البرغر", icon:"🍔"},
+  {id:"shawarma", name:"الشاورما", icon:"🌯"},
+  {id:"meals", name:"الوجبات", icon:"🍽️"},
+  {id:"wsand", name:"سندويش غربي", icon:"🥪"},
+  {id:"grill", name:"الشرقي / المشاوي", icon:"🔥"}
+];
+const MENU = [
+  // البيتزا
+  {id:"p1", cat:"pizza", name:"بيتزا قرايدس"},
+  {id:"p2", cat:"pizza", name:"بيتزا مرغريتا"},
+  {id:"p3", cat:"pizza", name:"بيتزا الزعيم"},
+  {id:"p4", cat:"pizza", name:"بيتزا سبيسيال"},
+  {id:"p5", cat:"pizza", name:"بيتزا لحومات باردة"},
+  {id:"p6", cat:"pizza", name:"بيتزا حبش"},
+  {id:"p7", cat:"pizza", name:"بيتزا خضار"},
+  {id:"p8", cat:"pizza", name:"بيتزا فصول أربعة"},
+  {id:"p9", cat:"pizza", name:"بيتزا سجق"},
+  {id:"p10", cat:"pizza", name:"بيتزا ببيروني"},
+  {id:"p11", cat:"pizza", name:"بيتزا فطر"},
+  // البرغر
+  {id:"b1", cat:"burger", name:"تشيز برغر"},
+  {id:"b2", cat:"burger", name:"كلاسيك برغر"},
+  {id:"b3", cat:"burger", name:"سماش برغر"},
+  {id:"b4", cat:"burger", name:"هاني ماسترد برغر"},
+  {id:"b5", cat:"burger", name:"تشكن برغر"},
+  {id:"b6", cat:"burger", name:"تشكن برغر كلاسيك"},
+  {id:"b7", cat:"burger", name:"برغر الزعيم"},
+  // الشاورما
+  {id:"sh1", cat:"shawarma", name:"شاورما عادي"},
+  {id:"sh2", cat:"shawarma", name:"شاورما دبل"},
+  {id:"sh3", cat:"shawarma", name:"شاورما اكسترا"},
+  {id:"sh4", cat:"shawarma", name:"شاورما الزعيم"},
+  {id:"sh5", cat:"shawarma", name:"شاورما بانيه"},
+  // الوجبات
+  {id:"m1", cat:"meals", name:"كيلو شاورما"},
+  {id:"m2", cat:"meals", name:"نصف كيلو شاورما"},
+  {id:"m3", cat:"meals", name:"وجبة الزعيم"},
+  {id:"m4", cat:"meals", name:"وجبة بانيه"},
+  {id:"m5", cat:"meals", name:"وجبة عربي"},
+  {id:"m6", cat:"meals", name:"وجبة عربي دبل"},
+  {id:"m7", cat:"meals", name:"وجبة بروستد جوانح"},
+  {id:"m8", cat:"meals", name:"وجبة ميكس"},
+  {id:"m9", cat:"meals", name:"باستا بطاطا"},
+  {id:"m10", cat:"meals", name:"وجبة تشكن الزعيم"},
+  {id:"m11", cat:"meals", name:"وجبة سوبريم"},
+  {id:"m12", cat:"meals", name:"وجبة شيش"},
+  {id:"m13", cat:"meals", name:"وجبة زنجر"},
+  {id:"m14", cat:"meals", name:"وجبة كريسبي"},
+  {id:"m15", cat:"meals", name:"وجبة كريسبي عائلي"},
+  {id:"m16", cat:"meals", name:"وجبة فاهيتا"},
+  {id:"m17", cat:"meals", name:"وجبة اسكالوب"},
+  {id:"m18", cat:"meals", name:"وجبة بروستد دبوس"},
+  {id:"m19", cat:"meals", name:"وجبة شيش مشوي"},
+  // سندويش غربي
+  {id:"w1", cat:"wsand", name:"سوبريم"},
+  {id:"w2", cat:"wsand", name:"سندويش الزعيم"},
+  {id:"w3", cat:"wsand", name:"كريزي تشكن"},
+  {id:"w4", cat:"wsand", name:"تويستر"},
+  {id:"w5", cat:"wsand", name:"فرانسيسكو"},
+  {id:"w6", cat:"wsand", name:"فاهيتا"},
+  {id:"w7", cat:"wsand", name:"مكسيكانو"},
+  {id:"w8", cat:"wsand", name:"اسكالوب"},
+  {id:"w9", cat:"wsand", name:"زنجر"},
+  {id:"w10", cat:"wsand", name:"كريسبي"},
+  {id:"w11", cat:"wsand", name:"قرايدس", desc:"بانيه، فريش"},
+  {id:"w12", cat:"wsand", name:"قرايدس خضار"},
+  {id:"w13", cat:"wsand", name:"سندويش فروج"},
+  // الشرقي / المشاوي
+  {id:"g1", cat:"grill", name:"كبسة رز ابيض منصف"},
+  {id:"g2", cat:"grill", name:"فروج مشوي"},
+  {id:"g3", cat:"grill", name:"نصف فروج مشوي"},
+  {id:"g4", cat:"grill", name:"فخاذ مشوي مع رز"},
+  {id:"g5", cat:"grill", name:"فروج مشوي مع رز"},
+  {id:"g6", cat:"grill", name:"نصف فروج مشوي مع رز"},
+  {id:"g7", cat:"grill", name:"جوانح مشوية"},
+  {id:"g8", cat:"grill", name:"شيش مشوي"},
+  {id:"g9", cat:"grill", name:"كاستا"},
+  {id:"g10", cat:"grill", name:"معجوقة"},
+  {id:"g11", cat:"grill", name:"كبة مقلية"},
+  {id:"g12", cat:"grill", name:"كبة مشوية"},
+  {id:"g13", cat:"grill", name:"كبة عالسيخ"},
+  {id:"g14", cat:"grill", name:"مناسف"}
+];
+const byId = Object.fromEntries(MENU.map(i=>[i.id,i]));
+let cart = {};
+try{ cart = JSON.parse(localStorage.getItem(CART_KEY)||"{}"); }catch(e){ cart={}; }
+let activeCat = "all";
+let delivery = true;
+
+const $ = id => document.getElementById(id);
+
+function save(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+
+function renderChips(){
+  const el = $("chips");
+  el.innerHTML = `<button class="chip${activeCat==="all"?" active":""}" data-c="all">الكل 🍽️</button>` +
+    CATS.map(c=>`<button class="chip${activeCat===c.id?" active":""}" data-c="${c.id}">${c.icon} ${c.name}</button>`).join("");
+  el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ activeCat=b.dataset.c; renderChips(); renderMenu(); });
+}
+function stepperHTML(id){
+  const q = cart[id]||0;
+  if(q===0) return `<div class="stepper"><button class="add" onclick="chQty('${id}',1)">أضف +</button></div>`;
+  return `<div class="stepper"><button onclick="chQty('${id}',1)">+</button><span class="qty">${q}</span><button onclick="chQty('${id}',-1)">−</button></div>`;
+}
+function renderMenu(){
+  const main = $("menu");
+  const cats = activeCat==="all" ? CATS : CATS.filter(c=>c.id===activeCat);
+  main.innerHTML = cats.map(c=>{
+    const items = MENU.filter(i=>i.cat===c.id);
+    return `<section class="cat" id="cat-${c.id}"><h2>${c.icon} ${c.name} <span class="count">${items.length}</span></h2>` +
+      items.map(i=>`<div class="item"><div class="info"><div class="name">${i.name}</div>` +
+        (i.desc?`<div class="desc">${i.desc}</div>`:"") +
+        `</div>${stepperHTML(i.id)}</div>`).join("") + `</section>`;
+  }).join("");
+  updateBar();
+}
+function chQty(id,d){
+  cart[id]=(cart[id]||0)+d;
+  if(cart[id]<=0) delete cart[id];
+  save(); renderMenu();
+}
+function updateBar(){
+  const n = cartCount(), bar = $("cartbar");
+  if(n===0){ bar.classList.remove("show"); return; }
+  bar.classList.add("show");
+  $("cartN").textContent = `🛒 ${n} ${n===1?"صنف":n===2?"صنفان":"أصناف"}`;
+}
+function openOrder(){
+  if(cartCount()===0) return;
+  $("orderLines").innerHTML = Object.entries(cart).map(([id,q])=>{
+    return `<div class="ln"><span>${q} × ${byId[id].name}</span></div>`;
+  }).join("");
+  $("overlay").classList.add("show");
+  document.body.style.overflow="hidden";
+}
+function closeOrder(){ $("overlay").classList.remove("show"); document.body.style.overflow=""; }
+
+$("goOrder").onclick = openOrder;
+$("cancelOrder").onclick = closeOrder;
+$("overlay").addEventListener("click", e=>{ if(e.target===$("overlay")) closeOrder(); });
+$("segD").onclick = ()=>{ delivery=true; $("segD").classList.add("active"); $("segP").classList.remove("active"); $("addrField").style.display=""; };
+$("segP").onclick = ()=>{ delivery=false; $("segP").classList.add("active"); $("segD").classList.remove("active"); $("addrField").style.display="none"; };
+
+$("sendWa").onclick = ()=>{
+  const name=$("fName").value.trim(), phone=$("fPhone").value.trim();
+  if(!name){ alert("فضلاً اكتب الاسم الكريم"); $("fName").focus(); return; }
+  if(!phone){ alert("فضلاً اكتب رقم الهاتف"); $("fPhone").focus(); return; }
+  const addr=$("fAddr").value.trim(), notes=$("fNotes").value.trim();
+  const L=[];
+  L.push("👑 طلب جديد — مطعم الزعيم");
+  L.push("———————————");
+  Object.entries(cart).forEach(([id,q])=>{ L.push(`${q} × ${byId[id].name}`); });
+  L.push("———————————");
+  L.push(`👤 الاسم: ${name}`);
+  L.push(`📞 الهاتف: ${phone}`);
+  L.push(delivery ? `🛵 توصيل إلى: ${addr||"—"}` : "🏃 استلام من المطعم");
+  if(notes) L.push(`📝 ملاحظات: ${notes}`);
+  window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(L.join("\n")), "_blank");
+};
+
+renderChips(); renderMenu();
+</script>
+
+<script>
+/* Menu-open tracking (2026-10-19): fire-and-forget ping so Ali can see which
+   restaurant owner opened their menu demo link. No cookies, no PII — the server
+   only stores the menu slug + timestamp (+hashed IP for country, same as the
+   clinic demos' analytics). One ping per browser tab session. */
+(function(){try{
+  var m=location.pathname.match(/\/menu-demo\/([a-z0-9-]+)\/?(?:[?#]|$)/);
+  if(!m)return;
+  var slug=m[1];
+  if(sessionStorage.getItem('menu_open_logged')===slug)return;
+  sessionStorage.setItem('menu_open_logged',slug);
+  fetch('https://kindly-anaconda-422.convex.site/trackVisit',{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=UTF-8'},
+    body:JSON.stringify({type:'menu_open',label:slug,path:'/menu/'+slug}),
+    keepalive:true
+  }).catch(function(){});
+}catch(e){}})();
+</script>
+</body>
+</html>
