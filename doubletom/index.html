@@ -21,13 +21,14 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Cairo',system-ui,sans-serif;background:var(--cream);color:var(--ink);padding-bottom:110px}
-/* ==== Splash ==== */
-#splash{position:fixed;inset:0;z-index:200;background:radial-gradient(circle at 50% 35%,#FFA64D 0%,var(--org) 55%,var(--org-dk) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .45s ease,visibility .45s}
-#splash.hide{opacity:0;visibility:hidden}
-#splash img{width:150px;height:150px;border-radius:50%;box-shadow:0 0 0 6px rgba(255,255,255,.35),0 18px 40px rgba(90,40,0,.45);animation:splashIn .7s cubic-bezier(.2,1.4,.4,1) both}
-#splash .nm{font-size:34px;font-weight:900;color:#fff;text-shadow:0 2px 10px rgba(90,40,0,.35);animation:splashIn .7s .1s cubic-bezier(.2,1.4,.4,1) both}
-#splash .sm{font-size:14px;font-weight:700;color:#FFE3C2;animation:splashIn .7s .2s both}
-@keyframes splashIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+/* ==== Splash v3 (theatrical) ==== */
+#splash{position:fixed;inset:0;z-index:200;background:radial-gradient(circle at 50% 35%,#FFA64D 0%,var(--org) 55%,var(--org-dk) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:transform .65s cubic-bezier(.76,0,.24,1)}
+#splash.hide{transform:translateY(-101%)}
+#splash img{width:150px;height:150px;border-radius:50%;animation:splashIn .6s cubic-bezier(.2,1.4,.4,1) both, splashPulse .8s .6s ease-in-out infinite alternate}
+@keyframes splashIn{from{transform:scale(.4) rotate(-14deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes splashPulse{from{box-shadow:0 0 0 5px rgba(255,255,255,.35),0 0 22px 4px rgba(255,255,255,.35)}to{box-shadow:0 0 0 10px rgba(255,255,255,.5),0 0 46px 14px rgba(255,255,255,.6)}}
+#splash .nm{font-size:36px;font-weight:900;color:#fff;text-shadow:0 2px 10px rgba(90,40,0,.35);animation:splashIn .6s .12s cubic-bezier(.2,1.4,.4,1) both}
+#splash .sm{font-size:14px;font-weight:700;color:#FFE3C2;animation:splashIn .6s .22s both}
 /* ==== App bar ==== */
 #appbar{position:fixed;top:0;left:0;right:0;height:var(--appbar-h);z-index:80;background:rgba(255,247,236,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 14px;transform:translateY(-105%);transition:transform .3s ease}
 body.scrolled #appbar{transform:none}
@@ -35,14 +36,25 @@ body.scrolled #appbar{transform:none}
 #appbar .t{flex:1;font-weight:900;font-size:17px}
 #appbar a.call{background:var(--org);color:#fff;text-decoration:none;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px}
 /* ==== Hero ==== */
-.hero{background:radial-gradient(circle at 50% -10%,#FFB066 0%,var(--org) 52%,var(--org-dk) 100%);color:#fff;text-align:center;padding:30px 18px 26px;position:relative;overflow:hidden}
+.hero{background:radial-gradient(circle at 50% -10%,#FFB066 0%,var(--org) 52%,var(--org-dk) 100%);color:#fff;text-align:center;padding:30px 18px 24px;position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.16) 1.5px,transparent 1.6px);background-size:22px 22px;pointer-events:none}
-.hero img.logo{width:min(330px,86vw);border-radius:20px;box-shadow:0 14px 36px rgba(90,40,0,.4),0 0 0 5px rgba(255,255,255,.35);position:relative;animation:heroIn .6s ease both}
-@keyframes heroIn{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#logoScroll{position:relative;will-change:transform,opacity}
+.logoWrap{position:relative;display:inline-block;border-radius:20px;overflow:hidden;box-shadow:0 14px 36px rgba(90,40,0,.4),0 0 0 5px rgba(255,255,255,.35);animation:floaty 3.4s ease-in-out infinite;cursor:pointer;line-height:0}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(-.6deg)}}
+.logoWrap img.logo{width:min(330px,86vw);display:block}
+.logoWrap::after{content:"";position:absolute;top:-70%;bottom:-70%;width:42%;left:-90%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 4.6s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,52%{left:-90%}82%,100%{left:140%}}
+.logoWrap img.dance{animation:dance .55s ease}
+@keyframes dance{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.06)}55%{transform:rotate(5deg) scale(1.1)}80%{transform:rotate(-3deg) scale(1.04)}100%{transform:rotate(0) scale(1)}}
+.star{position:fixed;z-index:120;font-size:19px;pointer-events:none;line-height:1}
 .hero h1{font-size:29px;font-weight:900;margin-top:14px;position:relative;text-shadow:0 2px 8px rgba(90,40,0,.3)}
 .hero p{font-weight:700;font-size:14px;color:#FFE9D2;margin-top:3px;position:relative}
 .hero .addr{font-size:12px;color:#FFD9AE;margin-top:2px;position:relative;font-weight:600}
 .hero .tag{display:inline-block;margin-top:12px;background:#fff;color:var(--org-dk);padding:6px 18px;border-radius:999px;font-size:13px;font-weight:800;position:relative;box-shadow:0 4px 12px rgba(90,40,0,.25)}
+.stats{display:flex;justify-content:center;gap:10px;margin-top:18px;position:relative;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.35);border-radius:16px;padding:9px 16px;min-width:96px;backdrop-filter:blur(4px)}
+.stat .num{font-size:23px;font-weight:900;line-height:1.1}
+.stat .lbl{font-size:11.5px;font-weight:700;color:#FFE9D2}
 .trial{max-width:640px;margin:14px auto 0;padding:0 14px}
 .trial .box{border:2px dashed var(--org);background:#FFF1DE;color:#9A5205;border-radius:14px;padding:10px 14px;font-size:13px;font-weight:700;text-align:center;line-height:1.7}
 /* ==== Chips ==== */
@@ -56,8 +68,9 @@ main{max-width:640px;margin:0 auto;padding:6px 14px}
 section.cat{margin-top:20px;scroll-margin-top:120px}
 section.cat h2{font-size:20px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 section.cat h2 .count{background:#FDE3C2;color:#B25E05;font-size:12px;padding:2px 10px;border-radius:999px}
-.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 3px rgba(46,26,5,.06)}
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 3px rgba(46,26,5,.06);transition:transform .15s ease,box-shadow .15s ease}
+.item.press{transform:scale(.975);box-shadow:0 6px 18px rgba(217,106,8,.22)}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
 .reveal.in{opacity:1;transform:none}
 .item .info{flex:1;min-width:0}
 .item .name{font-weight:800;font-size:16px}
@@ -65,14 +78,15 @@ section.cat h2 .count{background:#FDE3C2;color:#B25E05;font-size:12px;padding:2p
 .item .price{font-size:14px;font-weight:800;color:var(--org-dk);margin-top:2px}
 .stepper{display:flex;align-items:center;gap:10px;flex:0 0 auto}
 .stepper button{width:38px;height:38px;border-radius:50%;border:2px solid var(--org);background:#fff;color:var(--org-dk);font-size:20px;font-weight:900;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;transition:transform .12s ease}
-.stepper button:active{transform:scale(1.18);background:var(--org);color:#fff}
+.stepper button:active{transform:scale(1.2);background:var(--org);color:#fff}
 .stepper .qty{font-weight:900;font-size:17px;min-width:24px;text-align:center}
 .stepper .add{width:auto;padding:0 18px;border-radius:999px;font-size:14px;height:38px;font-family:inherit}
+.flyDot{position:fixed;z-index:130;font-size:26px;pointer-events:none;line-height:1;filter:drop-shadow(0 4px 8px rgba(90,40,0,.4))}
 /* ==== Cart bar ==== */
 .cartbar{position:fixed;bottom:0;left:0;right:0;z-index:70;background:var(--dark);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,.3)}
 .cartbar.show{display:flex}
 .cartbar.pulse{animation:pulse .35s ease}
-@keyframes pulse{0%{transform:scale(1)}35%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes pulse{0%{transform:scale(1)}35%{transform:scale(1.03)}100%{transform:scale(1)}}
 .cartbar .sum{flex:1}
 .cartbar .sum .n{font-size:15px;color:#fff;font-weight:800}
 .cartbar .sum .t{font-size:13px;color:#FFC38A;font-weight:700}
@@ -121,11 +135,20 @@ footer b{color:var(--org-dk)}
 </div>
 
 <header class="hero">
-  <img class="logo" src="logo.jpg" alt="دبل توم">
+  <div id="logoScroll">
+    <div class="logoWrap" id="logoWrap" title="دبل توم">
+      <img class="logo" id="heroLogo" src="logo.jpg" alt="دبل توم">
+    </div>
+  </div>
   <h1>دبل توم</h1>
   <p>شاورما وسندويش على أصولها — والتوم دبل 🧄</p>
   <div class="addr">📍 اللاذقية — المشروع السابع</div>
   <span class="tag">اختار وجبتك واطلبها مباشرة عبر واتساب 👇</span>
+  <div class="stats">
+    <div class="stat"><div class="num" data-count="28">0</div><div class="lbl">صنف بالقائمة</div></div>
+    <div class="stat"><div class="num" data-count="5">0</div><div class="lbl">فئات متنوعة</div></div>
+    <div class="stat"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">توم طبيعي</div></div>
+  </div>
 </header>
 
 <div class="trial"><div class="box">🧪 قائمة معاينة قبل الافتتاح — الأصناف والأسعار تقريبية للتجربة، وقائمة دبل توم الرسمية بتنزل مع الافتتاح قريباً</div></div>
@@ -161,18 +184,62 @@ footer b{color:var(--org-dk)}
 <footer><b>دبل توم</b> — اللاذقية، المشروع السابع<br>التوم عندنا دبل 🧄</footer>
 
 <script>
-/* ===== Splash (once per session) ===== */
+/* ===== Splash v3 (once per session, curtain lift) ===== */
 (function(){
   var sp = document.getElementById('splash');
-  if(sessionStorage.getItem('doubletom_splash')==='1'){ sp.remove(); return; }
+  if(sessionStorage.getItem('doubletom_splash')==='1'){ sp.remove(); startCounters(300); return; }
   sessionStorage.setItem('doubletom_splash','1');
-  setTimeout(function(){ sp.classList.add('hide'); setTimeout(function(){ sp.remove(); }, 500); }, 1150);
+  setTimeout(function(){ sp.classList.add('hide'); startCounters(500); setTimeout(function(){ sp.remove(); }, 750); }, 1500);
 })();
 
-/* ===== App bar on scroll ===== */
+/* ===== Count-up stats (Ali-Coding-style) ===== */
+function startCounters(delay){
+  setTimeout(function(){
+    document.querySelectorAll('.num[data-count]').forEach(function(el){
+      var target = +el.dataset.count, suffix = el.dataset.suffix||'', t0 = null;
+      function step(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts-t0)/900, 1), e = 1-Math.pow(1-p,3);
+        el.textContent = Math.round(target*e) + suffix;
+        if(p<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, delay||0);
+}
+
+/* ===== Scroll: hero logo morph + app bar ===== */
+var logoScrollEl = document.getElementById('logoScroll');
 window.addEventListener('scroll', function(){
-  document.body.classList.toggle('scrolled', window.scrollY > 260);
+  var y = window.scrollY, p = Math.min(y/240, 1);
+  document.body.classList.toggle('scrolled', y > 240);
+  if(logoScrollEl){
+    logoScrollEl.style.transform = 'scale(' + (1 - .42*p) + ') translateY(' + (-26*p) + 'px)';
+    logoScrollEl.style.opacity = 1 - .5*p;
+  }
 }, {passive:true});
+
+/* ===== Logo tap: dance + star burst ===== */
+function spawnStars(cx, cy, n){
+  var glyphs = ['⭐','✨','🧄','⭐','✨'];
+  for(var i=0;i<(n||7);i++){
+    var s = document.createElement('span');
+    s.className = 'star'; s.textContent = glyphs[i % glyphs.length];
+    s.style.left = cx + 'px'; s.style.top = cy + 'px';
+    document.body.appendChild(s);
+    var dx = (Math.random()*2-1) * 110, dy = -(40 + Math.random()*110);
+    s.animate([
+      {transform:'translate(-50%,-50%) scale(.4)', opacity:1},
+      {transform:'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(1.15) rotate(' + (Math.random()*160-80) + 'deg)', opacity:0}
+    ], {duration:750 + Math.random()*350, easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish = (function(el){ return function(){ el.remove(); }; })(s);
+  }
+}
+document.getElementById('logoWrap').addEventListener('click', function(){
+  var img = document.getElementById('heroLogo'), r = img.getBoundingClientRect();
+  img.classList.remove('dance'); void img.offsetWidth; img.classList.add('dance');
+  spawnStars(r.left + r.width/2, r.top + r.height/2, 8);
+  if(navigator.vibrate) navigator.vibrate(15);
+});
 
 const WA_NUMBER = "963938958882";
 const CART_KEY = "doubletom_cart";
@@ -242,8 +309,8 @@ function renderChips(){
 }
 function stepperHTML(id){
   const q = cart[id]||0;
-  if(q===0) return `<div class="stepper"><button class="add" onclick="chQty('${id}',1)">أضف +</button></div>`;
-  return `<div class="stepper"><button onclick="chQty('${id}',1)">+</button><span class="qty">${q}</span><button onclick="chQty('${id}',-1)">−</button></div>`;
+  if(q===0) return `<div class="stepper"><button class="add" onclick="chQty('${id}',1,event)">أضف +</button></div>`;
+  return `<div class="stepper"><button onclick="chQty('${id}',1,event)">+</button><span class="qty">${q}</span><button onclick="chQty('${id}',-1,event)">−</button></div>`;
 }
 function renderMenu(){
   const main = $("menu");
@@ -256,6 +323,10 @@ function renderMenu(){
   }).join("");
   const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.08});
   main.querySelectorAll(".reveal").forEach((el,i)=>{ el.style.transitionDelay = (i%5)*35 + "ms"; io.observe(el); });
+  main.querySelectorAll(".item").forEach(card=>{
+    card.addEventListener("pointerdown", ()=>card.classList.add("press"));
+    ["pointerup","pointerleave","pointercancel"].forEach(ev=>card.addEventListener(ev, ()=>card.classList.remove("press")));
+  });
   spyInit();
   updateBar();
 }
@@ -274,14 +345,40 @@ function spyInit(){
   }, {rootMargin:"-30% 0px -60% 0px"});
   document.querySelectorAll("section.cat").forEach(s=>so.observe(s));
 }
-function chQty(id,d){
+/* ===== Fly-to-cart ===== */
+function flyToCart(x, y){
+  const bar = $("cartbar");
+  if(!bar.classList.contains("show")) return;
+  const r = bar.getBoundingClientRect();
+  const tx = r.left + r.width/2, ty = r.top + r.height/2;
+  const dot = document.createElement("div");
+  dot.className = "flyDot"; dot.textContent = "🧄";
+  dot.style.left = (x-13) + "px"; dot.style.top = (y-13) + "px";
+  document.body.appendChild(dot);
+  const dx = tx-x, dy = ty-y;
+  dot.animate([
+    {transform:"translate(0,0) scale(1) rotate(0deg)", opacity:1},
+    {transform:`translate(${dx*.5}px, ${dy-130}px) scale(.95) rotate(160deg)`, opacity:1, offset:.55},
+    {transform:`translate(${dx}px, ${dy}px) scale(.2) rotate(320deg)`, opacity:.5}
+  ], {duration:680, easing:"cubic-bezier(.3,.7,.4,1)"}).onfinish = ()=>dot.remove();
+}
+function chQty(id,d,ev){
+  let sx=null, sy=null;
+  if(d>0 && ev && ev.currentTarget){
+    const r = ev.currentTarget.getBoundingClientRect();
+    sx = r.left + r.width/2; sy = r.top + r.height/2;
+  }
   cart[id]=(cart[id]||0)+d;
   if(cart[id]<=0) delete cart[id];
   save();
   const wrap = $("st-"+id);
   if(wrap) wrap.innerHTML = stepperHTML(id);
   updateBar();
-  if(d>0){ const bar = $("cartbar"); bar.classList.remove("pulse"); void bar.offsetWidth; bar.classList.add("pulse"); }
+  if(d>0){
+    if(navigator.vibrate) navigator.vibrate(10);
+    if(sx!==null) flyToCart(sx, sy);
+    const bar = $("cartbar"); bar.classList.remove("pulse"); void bar.offsetWidth; bar.classList.add("pulse");
+  }
 }
 function updateBar(){
   const n = cartCount(), bar = $("cartbar");
@@ -292,6 +389,8 @@ function updateBar(){
 }
 function openOrder(){
   if(cartCount()===0) return;
+  const r = $("goOrder").getBoundingClientRect();
+  spawnStars(r.left + r.width/2, r.top, 7);
   $("orderLines").innerHTML = Object.entries(cart).map(([id,q])=>{
     const i=byId[id];
     return `<div class="ln"><span>${q} × ${i.name}</span><span>${fmt(i.price*q)} ${CUR}</span></div>`;
