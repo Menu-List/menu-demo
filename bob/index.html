@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BOB Sandwich & Salad | قائمة الطعام</title>
+<meta name="description" content="قائمة طعام BOB Sandwich & Salad (اللاذقية) — سندويش وبرغر وسلطات خفيفة وصحية. اختار وجبتك واطلبها مباشرة عبر واتساب.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BOB Sandwich & Salad | قائمة الطعام">
+<meta property="og:description" content="خفيف • صحي • طازج 🥗 اختار وجبتك واطلبها مباشرة عبر واتساب">
+<meta property="og:image" content="https://menu-list.github.io/menu-demo/bob/og.png">
+<meta property="og:url" content="https://menu-list.github.io/menu-demo/bob/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B1216; --muted:#96757A; --cream:#FBF4EC; --card:#FFFFFF; --line:#EDD9CE;
+  --wine:#5C1A28; --wine-dk:#3E0F1A; --wine-lt:#A63D40; --wa:#1FAF54; --wa-dark:#178A42;
+  --appbar-h:54px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--cream);color:var(--ink);padding-bottom:110px}
+/* ==== Splash ==== */
+#splash{position:fixed;inset:0;z-index:200;background:radial-gradient(circle at 50% 35%,#7A2A38 0%,var(--wine) 55%,var(--wine-dk) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:transform .65s cubic-bezier(.76,0,.24,1)}
+#splash.hide{transform:translateY(-101%)}
+#splash img{width:150px;height:150px;border-radius:50%;animation:splashIn .6s cubic-bezier(.2,1.4,.4,1) both, splashPulse .8s .6s ease-in-out infinite alternate}
+@keyframes splashIn{from{transform:scale(.4) rotate(-14deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes splashPulse{from{box-shadow:0 0 0 5px rgba(255,255,255,.3),0 0 22px 4px rgba(255,255,255,.3)}to{box-shadow:0 0 0 10px rgba(255,255,255,.45),0 0 46px 14px rgba(255,255,255,.55)}}
+#splash .nm{font-size:36px;font-weight:900;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.4);animation:splashIn .6s .12s cubic-bezier(.2,1.4,.4,1) both}
+#splash .sm{font-size:14px;font-weight:700;color:#EBD5C8;animation:splashIn .6s .22s both}
+/* ==== App bar ==== */
+#appbar{position:fixed;top:0;left:0;right:0;height:var(--appbar-h);z-index:80;background:rgba(251,244,236,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 14px;transform:translateY(-105%);transition:transform .3s ease}
+body.scrolled #appbar{transform:none}
+#appbar img{width:38px;height:38px;border-radius:50%;border:2px solid var(--wine)}
+#appbar .t{flex:1;font-weight:900;font-size:17px}
+#appbar .t .en{direction:ltr;display:inline-block}
+#appbar a.call{background:var(--wine);color:#fff;text-decoration:none;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px}
+/* ==== Hero ==== */
+.hero{background:radial-gradient(circle at 50% -10%,#7A2A38 0%,var(--wine) 55%,var(--wine-dk) 100%);color:#fff;text-align:center;padding:30px 18px 24px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.13) 1.5px,transparent 1.6px);background-size:22px 22px;pointer-events:none}
+#logoScroll{position:relative;will-change:transform,opacity}
+.logoWrap{position:relative;display:inline-block;border-radius:22px;overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.45),0 0 0 5px rgba(255,255,255,.3);animation:floaty 3.4s ease-in-out infinite;cursor:pointer;line-height:0}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(-.6deg)}}
+.logoWrap img.logo{width:min(300px,80vw);display:block}
+.logoWrap::after{content:"";position:absolute;top:-70%;bottom:-70%;width:42%;left:-90%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:shine 4.6s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,52%{left:-90%}82%,100%{left:140%}}
+.logoWrap img.dance{animation:dance .55s ease}
+@keyframes dance{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.06)}55%{transform:rotate(5deg) scale(1.1)}80%{transform:rotate(-3deg) scale(1.04)}100%{transform:rotate(0) scale(1)}}
+.star{position:fixed;z-index:120;font-size:19px;pointer-events:none;line-height:1}
+.hero h1{font-size:27px;font-weight:900;margin-top:14px;position:relative;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.hero h1 .en{direction:ltr;display:inline-block}
+.hero p{font-weight:700;font-size:14px;color:#EBD5C8;margin-top:3px;position:relative}
+.hero .tag{display:inline-block;margin-top:12px;background:#fff;color:var(--wine);padding:6px 18px;border-radius:999px;font-size:13px;font-weight:800;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.stats{display:flex;justify-content:center;gap:10px;margin-top:18px;position:relative;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.13);border:1.5px solid rgba(255,255,255,.3);border-radius:16px;padding:9px 16px;min-width:96px;backdrop-filter:blur(4px)}
+.stat .num{font-size:23px;font-weight:900;line-height:1.1}
+.stat .lbl{font-size:11.5px;font-weight:700;color:#EBD5C8}
+/* ==== Chips ==== */
+.chips{position:sticky;top:0;z-index:60;background:var(--cream);padding:10px 12px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none;transition:top .3s ease}
+body.scrolled .chips{top:var(--appbar-h)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:2px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+.chip.active{background:var(--wine);border-color:var(--wine);color:#fff}
+/* ==== Menu ==== */
+main{max-width:640px;margin:0 auto;padding:6px 14px}
+section.cat{margin-top:20px;scroll-margin-top:120px}
+section.cat h2{font-size:20px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+section.cat h2 .count{background:#F3DCCB;color:#8A4A42;font-size:12px;padding:2px 10px;border-radius:999px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(43,18,22,.06);transition:transform .15s ease,box-shadow .15s ease}
+.item.press{transform:scale(.985);box-shadow:0 6px 18px rgba(92,26,40,.2)}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.reveal.in{opacity:1;transform:none}
+.item .name{font-weight:800;font-size:16px;margin-bottom:6px}
+.vrow{display:flex;align-items:center;gap:10px;padding:5px 0}
+.vrow + .vrow{border-top:1px dashed var(--line)}
+.vrow .vp{flex:1;font-size:14.5px;font-weight:800;color:var(--wine)}
+.stepper{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.stepper button{width:36px;height:36px;border-radius:50%;border:2px solid var(--wine);background:#fff;color:var(--wine);font-size:19px;font-weight:900;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;transition:transform .12s ease}
+.stepper button:active{transform:scale(1.2);background:var(--wine);color:#fff}
+.stepper .qty{font-weight:900;font-size:16px;min-width:22px;text-align:center}
+.stepper .add{width:auto;padding:0 16px;border-radius:999px;font-size:13.5px;height:36px;font-family:inherit}
+.flyDot{position:fixed;z-index:130;font-size:26px;pointer-events:none;line-height:1;filter:drop-shadow(0 4px 8px rgba(62,15,26,.4))}
+/* ==== Cart bar ==== */
+.cartbar{position:fixed;bottom:0;left:0;right:0;z-index:70;background:var(--wine-dk);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,.3)}
+.cartbar.show{display:flex}
+.cartbar.pulse{animation:pulse .35s ease}
+@keyframes pulse{0%{transform:scale(1)}35%{transform:scale(1.03)}100%{transform:scale(1)}}
+.cartbar .sum{flex:1}
+.cartbar .sum .n{font-size:15px;color:#fff;font-weight:800}
+.cartbar .sum .t{font-size:13px;color:#EBB9A8;font-weight:700}
+.cartbar .go{flex:0 0 auto;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:16px;padding:13px 26px;border-radius:14px;cursor:pointer}
+.cartbar .go:active{background:var(--wa-dark)}
+/* ==== Order sheet ==== */
+.overlay{position:fixed;inset:0;background:rgba(25,8,12,.6);z-index:90;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:up .25s ease;border-top:4px solid var(--wine)}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sheet h3{font-size:19px;font-weight:900;margin-bottom:4px}
+.sheet .sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.sheet .lines{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+.sheet .lines .ln{display:flex;justify-content:space-between;padding:4px 0;font-weight:600}
+.sheet .lines .total{border-top:2px dashed var(--line);margin-top:6px;padding-top:8px;font-weight:900;font-size:16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.field input,.field textarea{width:100%;font-family:inherit;font-size:15px;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--wine)}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;font-family:inherit;font-weight:800;font-size:15px;padding:11px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--muted)}
+.seg button.active{border-color:var(--wine);background:var(--wine);color:#fff}
+.sheet .send{width:100%;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:900;font-size:17px;padding:15px;border-radius:14px;cursor:pointer;margin-top:6px}
+.sheet .send:active{background:var(--wa-dark)}
+.sheet .cancel{width:100%;background:none;border:none;font-family:inherit;font-weight:700;font-size:14px;color:var(--muted);padding:12px;cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 16px 8px}
+footer b{color:var(--wine)}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <img src="icon.png" alt="BOB">
+  <div class="nm">BOB</div>
+  <div class="sm">Light • Healthy • Fresh 🥗</div>
+</div>
+
+<div id="appbar">
+  <img src="icon.png" alt="BOB">
+  <div class="t"><span class="en">BOB</span> Sand &amp; Salad</div>
+  <a class="call" href="tel:+963939766601">اتصال 📞</a>
+</div>
+
+<header class="hero">
+  <div id="logoScroll">
+    <div class="logoWrap" id="logoWrap" title="BOB">
+      <img class="logo" id="heroLogo" src="logo.jpg" alt="BOB Sandwich & Salad">
+    </div>
+  </div>
+  <h1><span class="en">BOB</span> Sandwich &amp; Salad</h1>
+  <p>خفيف • صحي • طازج — اللاذقية</p>
+  <span class="tag">اختار وجبتك واطلبها مباشرة عبر واتساب 👇</span>
+  <div class="stats">
+    <div class="stat"><div class="num" data-count="50">0</div><div class="lbl">صنف بالقائمة</div></div>
+    <div class="stat"><div class="num" data-count="5">0</div><div class="lbl">فئات متنوعة</div></div>
+    <div class="stat"><div class="num" data-count="2019">0</div><div class="lbl">منذ عام</div></div>
+  </div>
+</header>
+
+<nav class="chips" id="chips"></nav>
+<main id="menu"></main>
+
+<div class="cartbar" id="cartbar">
+  <div class="sum"><div class="n" id="cartN"></div><div class="t" id="cartT"></div></div>
+  <button class="go" id="goOrder">إتمام الطلب</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <h3>إتمام الطلب 🛒</h3>
+    <p class="sub">راجع طلبك وعبّي بياناتك، وبكبسة وحدة بينبعت كل شي للمطعم عبر واتساب</p>
+    <div class="lines" id="orderLines"></div>
+    <div class="field"><label>الاسم الكريم</label><input id="fName" placeholder="مثال: علي حسن"></div>
+    <div class="field"><label>رقم الهاتف</label><input id="fPhone" inputmode="tel" placeholder="09xxxxxxxx"></div>
+    <div class="field"><label>طريقة الاستلام</label>
+      <div class="seg">
+        <button type="button" id="segD" class="active">توصيل 🛵</button>
+        <button type="button" id="segP">استلام من المطعم 🏃</button>
+      </div>
+    </div>
+    <div class="field" id="addrField"><label>عنوان التوصيل</label><input id="fAddr" placeholder="الحي، الشارع، علامة مميزة"></div>
+    <div class="field"><label>ملاحظات (اختياري)</label><textarea id="fNotes" rows="2" placeholder="مثال: صوص أقل"></textarea></div>
+    <button class="send" id="sendWa">تأكيد وإرسال عبر واتساب</button>
+    <button class="cancel" id="cancelOrder">رجوع للقائمة</button>
+  </div>
+</div>
+
+<footer><b>BOB Sandwich &amp; Salad</b> — اللاذقية<br>Light • Healthy • Fresh 🥗</footer>
+
+<script>
+/* ===== Splash (once per session, curtain lift) ===== */
+(function(){
+  var sp = document.getElementById('splash');
+  if(sessionStorage.getItem('bob_splash')==='1'){ sp.remove(); startCounters(300); return; }
+  sessionStorage.setItem('bob_splash','1');
+  setTimeout(function(){ sp.classList.add('hide'); startCounters(500); setTimeout(function(){ sp.remove(); }, 750); }, 1500);
+})();
+
+/* ===== Count-up stats ===== */
+function startCounters(delay){
+  setTimeout(function(){
+    document.querySelectorAll('.num[data-count]').forEach(function(el){
+      var target = +el.dataset.count, suffix = el.dataset.suffix||'', t0 = null;
+      function step(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts-t0)/900, 1), e = 1-Math.pow(1-p,3);
+        el.textContent = Math.round(target*e) + suffix;
+        if(p<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, delay||0);
+}
+
+/* ===== Scroll: hero logo morph + app bar ===== */
+var logoScrollEl = document.getElementById('logoScroll');
+window.addEventListener('scroll', function(){
+  var y = window.scrollY, p = Math.min(y/240, 1);
+  document.body.classList.toggle('scrolled', y > 240);
+  if(logoScrollEl){
+    logoScrollEl.style.transform = 'scale(' + (1 - .42*p) + ') translateY(' + (-26*p) + 'px)';
+    logoScrollEl.style.opacity = 1 - .5*p;
+  }
+}, {passive:true});
+
+/* ===== Logo tap: dance + star burst ===== */
+function spawnStars(cx, cy, n){
+  var glyphs = ['⭐','✨','🥗','⭐','✨'];
+  for(var i=0;i<(n||7);i++){
+    var s = document.createElement('span');
+    s.className = 'star'; s.textContent = glyphs[i % glyphs.length];
+    s.style.left = cx + 'px'; s.style.top = cy + 'px';
+    document.body.appendChild(s);
+    var dx = (Math.random()*2-1) * 110, dy = -(40 + Math.random()*110);
+    s.animate([
+      {transform:'translate(-50%,-50%) scale(.4)', opacity:1},
+      {transform:'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(1.15) rotate(' + (Math.random()*160-80) + 'deg)', opacity:0}
+    ], {duration:750 + Math.random()*350, easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish = (function(el){ return function(){ el.remove(); }; })(s);
+  }
+}
+document.getElementById('logoWrap').addEventListener('click', function(){
+  var img = document.getElementById('heroLogo'), r = img.getBoundingClientRect();
+  img.classList.remove('dance'); void img.offsetWidth; img.classList.add('dance');
+  spawnStars(r.left + r.width/2, r.top + r.height/2, 8);
+  if(navigator.vibrate) navigator.vibrate(15);
+});
+
+const WA_NUMBER = "963939766601";
+const CART_KEY = "bob_cart";
+const CUR = "ل.س";
+const CATS = [
+  {id:"sand", name:"السندويش", icon:"🥪"},
+  {id:"burger", name:"البرغر", icon:"🍔"},
+  {id:"breakfast", name:"الفطور", icon:"🍳"},
+  {id:"meals", name:"الوجبات", icon:"🍽️"},
+  {id:"salad", name:"السلطات", icon:"🥗"}
+];
+const MENU = [
+  // السندويش
+  {id:"kc", cat:"sand", name:"سندويش كباب دجاج", prices:[250]},
+  {id:"kb", cat:"sand", name:"سندويش كباب لحم", prices:[350]},
+  {id:"fa", cat:"sand", name:"فاهيتا", prices:[350,400]},
+  {id:"fr", cat:"sand", name:"فرانسيسكو", prices:[350,400]},
+  {id:"mx", cat:"sand", name:"مكسيكانو", prices:[350,400]},
+  {id:"ta", cat:"sand", name:"تيستي", prices:[350,400]},
+  {id:"ch", cat:"sand", name:"تشاينيز", prices:[300,350]},
+  {id:"bu", cat:"sand", name:"بافلو", prices:[300,350]},
+  {id:"my", cat:"sand", name:"ميستري", prices:[350,400]},
+  {id:"sh", cat:"sand", name:"شاورما", prices:[250,350]},
+  {id:"su", cat:"sand", name:"سجق", prices:[200]},
+  {id:"to", cat:"sand", name:"طوشكا", prices:[260]},
+  {id:"ss", cat:"sand", name:"شيش", prices:[300]},
+  {id:"hd", cat:"sand", name:"هوت دوغ", prices:[200]},
+  // البرغر
+  {id:"bc", cat:"burger", name:"كلاسيك برغر", prices:[250,350]},
+  {id:"bd", cat:"burger", name:"دبل برغر", prices:[350,550]},
+  {id:"bm", cat:"burger", name:"برغر بالفطر", prices:[300,400]},
+  {id:"br", cat:"burger", name:"برغر رومي", prices:[300,400]},
+  {id:"bz", cat:"burger", name:"تشيز برغر", prices:[350,450]},
+  {id:"bx", cat:"burger", name:"ميكس برغر", prices:[450,550]},
+  {id:"bs", cat:"burger", name:"سبيشال برغر", prices:[550,750]},
+  // الفطور
+  {id:"e1", cat:"breakfast", name:"جبنة مسنّرة", prices:[160]},
+  {id:"e2", cat:"breakfast", name:"جبنة قشقوان", prices:[200]},
+  {id:"e3", cat:"breakfast", name:"جبنة رومي بالدجاج", prices:[220]},
+  {id:"e4", cat:"breakfast", name:"كلوب رومي", prices:[200]},
+  {id:"e5", cat:"breakfast", name:"جبنة مشكّلة", prices:[200]},
+  {id:"e6", cat:"breakfast", name:"جبنة مشكّلة بالفطر", prices:[250]},
+  {id:"e7", cat:"breakfast", name:"كلوب تونا", prices:[300]},
+  {id:"e8", cat:"breakfast", name:"كلوب بيض", prices:[200]},
+  {id:"e9", cat:"breakfast", name:"بيتزا", prices:[200]},
+  {id:"e10", cat:"breakfast", name:"لبنة", prices:[100]},
+  // الوجبات
+  {id:"mfc", cat:"meals", name:"وجبة فاهيتا دجاج", prices:[50]},
+  {id:"mfb", cat:"meals", name:"وجبة فاهيتا لحم", prices:[65]},
+  {id:"mk", cat:"meals", name:"كبسة سورية", prices:[55,70]},
+  {id:"ms", cat:"meals", name:"شيش", prices:[50,65]},
+  {id:"mb", cat:"meals", name:"برياني هندي", prices:[55,70]},
+  {id:"mm", cat:"meals", name:"مكسيكانو", prices:[50,65]},
+  {id:"mc", cat:"meals", name:"تشاينيز", prices:[50,65]},
+  {id:"mt", cat:"meals", name:"ستروغونوف", prices:[55,70]},
+  {id:"mw", cat:"meals", name:"سويدي", prices:[55,70]},
+  {id:"mr", cat:"meals", name:"طبق ريزو", prices:[35,45]},
+  {id:"mf", cat:"meals", name:"طبق فتة", prices:[35,45]},
+  // السلطات
+  {id:"d1", cat:"salad", name:"سلطة سيزر", prices:[300]},
+  {id:"d2", cat:"salad", name:"سلطة الشيف", prices:[350]},
+  {id:"d3", cat:"salad", name:"سلطة ذرة", prices:[350]},
+  {id:"d4", cat:"salad", name:"سلطة تونا", prices:[350]},
+  {id:"d5", cat:"salad", name:"سلطة باستا", prices:[250]},
+  {id:"d6", cat:"salad", name:"باستا بشاميل", prices:[300]},
+  {id:"d7", cat:"salad", name:"نودلز صيني", prices:[250]},
+  {id:"d8", cat:"salad", name:"سلطة خضار", prices:[250]}
+];
+/* Flatten to purchasable lines: key = itemId or itemId@variantIndex */
+const LINES = {};
+MENU.forEach(i=>i.prices.forEach((p,vi)=>{ LINES[i.id+"@"+vi] = {name:i.name, price:p}; }));
+let cart = {};
+try{ cart = JSON.parse(localStorage.getItem(CART_KEY)||"{}"); }catch(e){ cart={}; }
+let delivery = true;
+
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("en-US");
+
+function save(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+function cartTotal(){ return Object.entries(cart).reduce((a,[k,q])=>a+LINES[k].price*q,0); }
+
+function renderChips(){
+  const el = $("chips");
+  el.innerHTML = `<button class="chip active" data-c="all">الكل 🍽️</button>` +
+    CATS.map(c=>`<button class="chip" data-c="${c.id}">${c.icon} ${c.name}</button>`).join("");
+  el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{
+    const t = b.dataset.c==="all" ? document.body : document.getElementById("cat-"+b.dataset.c);
+    if(t) t.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+}
+function stepperHTML(key){
+  const q = cart[key]||0;
+  if(q===0) return `<div class="stepper"><button class="add" onclick="chQty('${key}',1,event)">أضف +</button></div>`;
+  return `<div class="stepper"><button onclick="chQty('${key}',1,event)">+</button><span class="qty">${q}</span><button onclick="chQty('${key}',-1,event)">−</button></div>`;
+}
+function renderMenu(){
+  const main = $("menu");
+  main.innerHTML = CATS.map(c=>{
+    const items = MENU.filter(i=>i.cat===c.id);
+    return `<section class="cat" id="cat-${c.id}"><h2>${c.icon} ${c.name} <span class="count">${items.length}</span></h2>` +
+      items.map(i=>`<div class="item reveal"><div class="name">${i.name}</div>` +
+        i.prices.map((p,vi)=>{
+          const key = i.id+"@"+vi;
+          return `<div class="vrow"><span class="vp">${fmt(p)} ${CUR}</span><span id="st-${key}">${stepperHTML(key)}</span></div>`;
+        }).join("") + `</div>`).join("") + `</section>`;
+  }).join("");
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.08});
+  main.querySelectorAll(".reveal").forEach((el,i)=>{ el.style.transitionDelay = (i%5)*35 + "ms"; io.observe(el); });
+  main.querySelectorAll(".item").forEach(card=>{
+    card.addEventListener("pointerdown", ()=>card.classList.add("press"));
+    ["pointerup","pointerleave","pointercancel"].forEach(ev=>card.addEventListener(ev, ()=>card.classList.remove("press")));
+  });
+  spyInit();
+  updateBar();
+}
+function spyInit(){
+  const chips = document.querySelectorAll(".chip");
+  const so = new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        chips.forEach(ch=>{
+          const on = ch.dataset.c===e.target.id.replace("cat-","");
+          ch.classList.toggle("active", on);
+          if(on) ch.scrollIntoView({block:"nearest", inline:"center", behavior:"smooth"});
+        });
+      }
+    });
+  }, {rootMargin:"-30% 0px -60% 0px"});
+  document.querySelectorAll("section.cat").forEach(s=>so.observe(s));
+}
+/* ===== Fly-to-cart ===== */
+function flyToCart(x, y){
+  const bar = $("cartbar");
+  if(!bar.classList.contains("show")) return;
+  const r = bar.getBoundingClientRect();
+  const tx = r.left + r.width/2, ty = r.top + r.height/2;
+  const dot = document.createElement("div");
+  dot.className = "flyDot"; dot.textContent = "🥗";
+  dot.style.left = (x-13) + "px"; dot.style.top = (y-13) + "px";
+  document.body.appendChild(dot);
+  const dx = tx-x, dy = ty-y;
+  dot.animate([
+    {transform:"translate(0,0) scale(1) rotate(0deg)", opacity:1},
+    {transform:`translate(${dx*.5}px, ${dy-130}px) scale(.95) rotate(160deg)`, opacity:1, offset:.55},
+    {transform:`translate(${dx}px, ${dy}px) scale(.2) rotate(320deg)`, opacity:.5}
+  ], {duration:680, easing:"cubic-bezier(.3,.7,.4,1)"}).onfinish = ()=>dot.remove();
+}
+function chQty(key,d,ev){
+  let sx=null, sy=null;
+  if(d>0 && ev && ev.currentTarget){
+    const r = ev.currentTarget.getBoundingClientRect();
+    sx = r.left + r.width/2; sy = r.top + r.height/2;
+  }
+  cart[key]=(cart[key]||0)+d;
+  if(cart[key]<=0) delete cart[key];
+  save();
+  const wrap = document.getElementById("st-"+key);
+  if(wrap) wrap.innerHTML = stepperHTML(key);
+  updateBar();
+  if(d>0){
+    if(navigator.vibrate) navigator.vibrate(10);
+    if(sx!==null) flyToCart(sx, sy);
+    const bar = $("cartbar"); bar.classList.remove("pulse"); void bar.offsetWidth; bar.classList.add("pulse");
+  }
+}
+function updateBar(){
+  const n = cartCount(), bar = $("cartbar");
+  if(n===0){ bar.classList.remove("show"); return; }
+  bar.classList.add("show");
+  $("cartN").textContent = `🛒 ${n} ${n===1?"صنف":n===2?"صنفان":"أصناف"}`;
+  $("cartT").textContent = `المجموع: ${fmt(cartTotal())} ${CUR}`;
+}
+function openOrder(){
+  if(cartCount()===0) return;
+  const r = $("goOrder").getBoundingClientRect();
+  spawnStars(r.left + r.width/2, r.top, 7);
+  $("orderLines").innerHTML = Object.entries(cart).map(([k,q])=>{
+    const i=LINES[k];
+    return `<div class="ln"><span>${q} × ${i.name}</span><span>${fmt(i.price*q)} ${CUR}</span></div>`;
+  }).join("") + `<div class="ln total"><span>المجموع</span><span>${fmt(cartTotal())} ${CUR}</span></div>`;
+  $("overlay").classList.add("show");
+  document.body.style.overflow="hidden";
+}
+function closeOrder(){ $("overlay").classList.remove("show"); document.body.style.overflow=""; }
+
+$("goOrder").onclick = openOrder;
+$("cancelOrder").onclick = closeOrder;
+$("overlay").addEventListener("click", e=>{ if(e.target===$("overlay")) closeOrder(); });
+$("segD").onclick = ()=>{ delivery=true; $("segD").classList.add("active"); $("segP").classList.remove("active"); $("addrField").style.display=""; };
+$("segP").onclick = ()=>{ delivery=false; $("segP").classList.add("active"); $("segD").classList.remove("active"); $("addrField").style.display="none"; };
+
+$("sendWa").onclick = ()=>{
+  const name=$("fName").value.trim(), phone=$("fPhone").value.trim();
+  if(!name){ alert("فضلاً اكتب الاسم الكريم"); $("fName").focus(); return; }
+  if(!phone){ alert("فضلاً اكتب رقم الهاتف"); $("fPhone").focus(); return; }
+  const addr=$("fAddr").value.trim(), notes=$("fNotes").value.trim();
+  const L=[];
+  L.push("🥗 طلب جديد — BOB Sand & Salad");
+  L.push("———————————");
+  Object.entries(cart).forEach(([k,q])=>{ const i=LINES[k]; L.push(`${q} × ${i.name} = ${fmt(i.price*q)} ${CUR}`); });
+  L.push("———————————");
+  L.push(`المجموع: ${fmt(cartTotal())} ${CUR}`);
+  L.push(`👤 الاسم: ${name}`);
+  L.push(`📞 الهاتف: ${phone}`);
+  L.push(delivery ? `🛵 توصيل إلى: ${addr||"—"}` : "🏃 استلام من المطعم");
+  if(notes) L.push(`📝 ملاحظات: ${notes}`);
+  window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(L.join("\n")), "_blank");
+};
+
+renderChips(); renderMenu();
+</script>
+
+<script>
+/* Menu-open tracking (2026-10-19): fire-and-forget ping so Ali can see which
+   restaurant owner opened their menu demo link. No cookies, no PII — the server
+   only stores the menu slug + timestamp (+hashed IP for country, same as the
+   clinic demos' analytics). One ping per browser tab session. */
+(function(){try{
+  var m=location.pathname.match(/\/menu-demo\/([a-z0-9-]+)\/?(?:[?#]|$)/);
+  if(!m)return;
+  var slug=m[1];
+  if(sessionStorage.getItem('menu_open_logged')===slug)return;
+  sessionStorage.setItem('menu_open_logged',slug);
+  fetch('https://kindly-anaconda-422.convex.site/trackVisit',{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=UTF-8'},
+    body:JSON.stringify({type:'menu_open',label:slug,path:'/menu/'+slug}),
+    keepalive:true
+  }).catch(function(){});
+}catch(e){}})();
+</script>
+</body>
+</html>
