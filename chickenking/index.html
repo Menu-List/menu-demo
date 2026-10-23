@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ملك الدجاج Chicken King | قائمة الطعام</title>
+<meta name="description" content="قائمة طعام ملك الدجاج Chicken King (اللاذقية) — شاورما وبروستد وبيتزا ووجبات. اختار وجبتك واطلبها مباشرة عبر واتساب.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ملك الدجاج Chicken King | قائمة الطعام">
+<meta property="og:description" content="قائمة الملك 👑 اختار وجبتك واطلبها مباشرة عبر واتساب">
+<meta property="og:image" content="https://menu-list.github.io/menu-demo/chickenking/og.png">
+<meta property="og:url" content="https://menu-list.github.io/menu-demo/chickenking/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#241A08; --muted:#A08B57; --cream:#FBF6EA; --card:#FFFFFF; --line:#F0E2BE;
+  --gold:#D9A416; --gold-dk:#A87D08; --red:#D92323; --black:#171208; --wa:#1FAF54; --wa-dark:#178A42;
+  --appbar-h:54px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--cream);color:var(--ink);padding-bottom:110px}
+/* ==== Splash ==== */
+#splash{position:fixed;inset:0;z-index:200;background:radial-gradient(circle at 50% 35%,#33270E 0%,#1D1507 55%,#0D0903 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:transform .65s cubic-bezier(.76,0,.24,1)}
+#splash.hide{transform:translateY(-101%)}
+#splash img{width:150px;height:150px;border-radius:50%;animation:splashIn .6s cubic-bezier(.2,1.4,.4,1) both, splashPulse .8s .6s ease-in-out infinite alternate}
+@keyframes splashIn{from{transform:scale(.4) rotate(-14deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes splashPulse{from{box-shadow:0 0 0 5px rgba(217,164,22,.35),0 0 22px 4px rgba(217,164,22,.4)}to{box-shadow:0 0 0 10px rgba(217,164,22,.5),0 0 46px 16px rgba(217,164,22,.6)}}
+#splash .nm{font-size:33px;font-weight:900;color:#F5CF5A;text-shadow:0 2px 10px rgba(0,0,0,.5);animation:splashIn .6s .12s cubic-bezier(.2,1.4,.4,1) both}
+#splash .sm{font-size:14px;font-weight:700;color:#D9C48D;animation:splashIn .6s .22s both}
+/* ==== App bar ==== */
+#appbar{position:fixed;top:0;left:0;right:0;height:var(--appbar-h);z-index:80;background:rgba(251,246,234,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 14px;transform:translateY(-105%);transition:transform .3s ease}
+body.scrolled #appbar{transform:none}
+#appbar img{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold)}
+#appbar .t{flex:1;font-weight:900;font-size:17px}
+#appbar a.call{background:var(--gold-dk);color:#fff;text-decoration:none;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px}
+/* ==== Hero ==== */
+.hero{background:radial-gradient(circle at 50% -10%,#3D2D0F 0%,#201708 55%,#100B03 100%);color:#fff;text-align:center;padding:30px 18px 24px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(217,164,22,.16) 1.5px,transparent 1.6px);background-size:22px 22px;pointer-events:none}
+#logoScroll{position:relative;will-change:transform,opacity}
+.logoWrap{position:relative;display:inline-block;border-radius:22px;overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.55),0 0 0 5px rgba(217,164,22,.4);animation:floaty 3.4s ease-in-out infinite;cursor:pointer;line-height:0;background:#000}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(-.6deg)}}
+.logoWrap img.logo{width:min(290px,76vw);display:block}
+.logoWrap::after{content:"";position:absolute;top:-70%;bottom:-70%;width:42%;left:-90%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shine 4.6s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,52%{left:-90%}82%,100%{left:140%}}
+.logoWrap img.dance{animation:dance .55s ease}
+@keyframes dance{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.06)}55%{transform:rotate(5deg) scale(1.1)}80%{transform:rotate(-3deg) scale(1.04)}100%{transform:rotate(0) scale(1)}}
+.star{position:fixed;z-index:120;font-size:19px;pointer-events:none;line-height:1}
+.hero h1{font-size:29px;font-weight:900;margin-top:14px;position:relative;color:#F5CF5A;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+.hero p{font-weight:700;font-size:14px;color:#D9C48D;margin-top:3px;position:relative}
+.hero .tag{display:inline-block;margin-top:12px;background:var(--gold);color:#241A08;padding:6px 18px;border-radius:999px;font-size:13px;font-weight:800;position:relative;box-shadow:0 4px 14px rgba(217,164,22,.4)}
+.stats{display:flex;justify-content:center;gap:10px;margin-top:18px;position:relative;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.09);border:1.5px solid rgba(217,164,22,.45);border-radius:16px;padding:9px 16px;min-width:96px;backdrop-filter:blur(4px)}
+.stat .num{font-size:23px;font-weight:900;line-height:1.1;color:#F5CF5A}
+.stat .lbl{font-size:11.5px;font-weight:700;color:#D9C48D}
+/* ==== Chips ==== */
+.chips{position:sticky;top:0;z-index:60;background:var(--cream);padding:10px 12px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none;transition:top .3s ease}
+body.scrolled .chips{top:var(--appbar-h)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:2px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+.chip.active{background:var(--gold-dk);border-color:var(--gold-dk);color:#fff}
+/* ==== Menu ==== */
+main{max-width:640px;margin:0 auto;padding:6px 14px}
+section.cat{margin-top:20px;scroll-margin-top:120px}
+section.cat h2{font-size:20px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+section.cat h2 .count{background:#F7E8BC;color:#8A6505;font-size:12px;padding:2px 10px;border-radius:999px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 3px rgba(36,26,8,.06);transition:transform .15s ease,box-shadow .15s ease}
+.item.press{transform:scale(.985);box-shadow:0 6px 18px rgba(168,125,8,.2)}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.reveal.in{opacity:1;transform:none}
+.item .info{flex:1;min-width:0}
+.item .name{font-weight:800;font-size:16px}
+.stepper{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.stepper button{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold-dk);background:#fff;color:var(--gold-dk);font-size:20px;font-weight:900;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;transition:transform .12s ease}
+.stepper button:active{transform:scale(1.2);background:var(--gold-dk);color:#fff}
+.stepper .qty{font-weight:900;font-size:17px;min-width:24px;text-align:center}
+.stepper .add{width:auto;padding:0 18px;border-radius:999px;font-size:14px;height:38px;font-family:inherit}
+.flyDot{position:fixed;z-index:130;font-size:26px;pointer-events:none;line-height:1;filter:drop-shadow(0 4px 8px rgba(120,90,0,.45))}
+/* ==== Cart bar ==== */
+.cartbar{position:fixed;bottom:0;left:0;right:0;z-index:70;background:var(--black);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,.3)}
+.cartbar.show{display:flex}
+.cartbar.pulse{animation:pulse .35s ease}
+@keyframes pulse{0%{transform:scale(1)}35%{transform:scale(1.03)}100%{transform:scale(1)}}
+.cartbar .sum{flex:1}
+.cartbar .sum .n{font-size:15px;color:#fff;font-weight:800}
+.cartbar .sum .t{font-size:13px;color:#E8CD7E;font-weight:700}
+.cartbar .go{flex:0 0 auto;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:16px;padding:13px 26px;border-radius:14px;cursor:pointer}
+.cartbar .go:active{background:var(--wa-dark)}
+/* ==== Order sheet ==== */
+.overlay{position:fixed;inset:0;background:rgba(15,10,2,.62);z-index:90;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:up .25s ease;border-top:4px solid var(--gold)}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sheet h3{font-size:19px;font-weight:900;margin-bottom:4px}
+.sheet .sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.sheet .lines{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+.sheet .lines .ln{display:flex;justify-content:space-between;padding:4px 0;font-weight:600}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.field input,.field textarea{width:100%;font-family:inherit;font-size:15px;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;font-family:inherit;font-weight:800;font-size:15px;padding:11px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--muted)}
+.seg button.active{border-color:var(--gold-dk);background:var(--gold-dk);color:#fff}
+.sheet .send{width:100%;background:var(--wa);color:#fff;border:none;font-family:inherit;font-weight:900;font-size:17px;padding:15px;border-radius:14px;cursor:pointer;margin-top:6px}
+.sheet .send:active{background:var(--wa-dark)}
+.sheet .cancel{width:100%;background:none;border:none;font-family:inherit;font-weight:700;font-size:14px;color:var(--muted);padding:12px;cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 16px 8px}
+footer b{color:var(--gold-dk)}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <img src="icon.png" alt="ملك الدجاج">
+  <div class="nm">ملك الدجاج</div>
+  <div class="sm">Chicken King 👑</div>
+</div>
+
+<div id="appbar">
+  <img src="icon.png" alt="ملك الدجاج">
+  <div class="t">ملك الدجاج</div>
+  <a class="call" href="tel:+963994733313">اتصال 📞</a>
+</div>
+
+<header class="hero">
+  <div id="logoScroll">
+    <div class="logoWrap" id="logoWrap" title="ملك الدجاج">
+      <img class="logo" id="heroLogo" src="logo.jpg" alt="ملك الدجاج Chicken King">
+    </div>
+  </div>
+  <h1>ملك الدجاج 👑</h1>
+  <p>Chicken King — اللاذقية</p>
+  <span class="tag">اختار وجبتك واطلبها مباشرة عبر واتساب 👇</span>
+  <div class="stats">
+    <div class="stat"><div class="num" data-count="52">0</div><div class="lbl">صنف بالقائمة</div></div>
+    <div class="stat"><div class="num" data-count="7">0</div><div class="lbl">فئات متنوعة</div></div>
+    <div class="stat"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">أصناف الملك</div></div>
+  </div>
+</header>
+
+<nav class="chips" id="chips"></nav>
+<main id="menu"></main>
+
+<div class="cartbar" id="cartbar">
+  <div class="sum"><div class="n" id="cartN"></div><div class="t" id="cartT"></div></div>
+  <button class="go" id="goOrder">إتمام الطلب</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <h3>إتمام الطلب 🛒</h3>
+    <p class="sub">راجع طلبك وعبّي بياناتك، وبكبسة وحدة بينبعت كل شي للمطعم عبر واتساب</p>
+    <div class="lines" id="orderLines"></div>
+    <div class="field"><label>الاسم الكريم</label><input id="fName" placeholder="مثال: علي حسن"></div>
+    <div class="field"><label>رقم الهاتف</label><input id="fPhone" inputmode="tel" placeholder="09xxxxxxxx"></div>
+    <div class="field"><label>طريقة الاستلام</label>
+      <div class="seg">
+        <button type="button" id="segD" class="active">توصيل 🛵</button>
+        <button type="button" id="segP">استلام من المطعم 🏃</button>
+      </div>
+    </div>
+    <div class="field" id="addrField"><label>عنوان التوصيل</label><input id="fAddr" placeholder="الحي، الشارع، علامة مميزة"></div>
+    <div class="field"><label>ملاحظات (اختياري)</label><textarea id="fNotes" rows="2" placeholder="مثال: حار زيادة"></textarea></div>
+    <button class="send" id="sendWa">تأكيد وإرسال عبر واتساب</button>
+    <button class="cancel" id="cancelOrder">رجوع للقائمة</button>
+  </div>
+</div>
+
+<footer><b>ملك الدجاج Chicken King</b> — اللاذقية 👑</footer>
+
+<script>
+/* ===== Splash (once per session, curtain lift) ===== */
+(function(){
+  var sp = document.getElementById('splash');
+  if(sessionStorage.getItem('cking_splash')==='1'){ sp.remove(); startCounters(300); return; }
+  sessionStorage.setItem('cking_splash','1');
+  setTimeout(function(){ sp.classList.add('hide'); startCounters(500); setTimeout(function(){ sp.remove(); }, 750); }, 1500);
+})();
+
+/* ===== Count-up stats ===== */
+function startCounters(delay){
+  setTimeout(function(){
+    document.querySelectorAll('.num[data-count]').forEach(function(el){
+      var target = +el.dataset.count, suffix = el.dataset.suffix||'', t0 = null;
+      function step(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts-t0)/900, 1), e = 1-Math.pow(1-p,3);
+        el.textContent = Math.round(target*e) + suffix;
+        if(p<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, delay||0);
+}
+
+/* ===== Scroll: hero logo morph + app bar ===== */
+var logoScrollEl = document.getElementById('logoScroll');
+window.addEventListener('scroll', function(){
+  var y = window.scrollY, p = Math.min(y/240, 1);
+  document.body.classList.toggle('scrolled', y > 240);
+  if(logoScrollEl){
+    logoScrollEl.style.transform = 'scale(' + (1 - .42*p) + ') translateY(' + (-26*p) + 'px)';
+    logoScrollEl.style.opacity = 1 - .5*p;
+  }
+}, {passive:true});
+
+/* ===== Logo tap: dance + crown burst ===== */
+function spawnStars(cx, cy, n){
+  var glyphs = ['👑','⭐','✨','👑','⭐'];
+  for(var i=0;i<(n||7);i++){
+    var s = document.createElement('span');
+    s.className = 'star'; s.textContent = glyphs[i % glyphs.length];
+    s.style.left = cx + 'px'; s.style.top = cy + 'px';
+    document.body.appendChild(s);
+    var dx = (Math.random()*2-1) * 110, dy = -(40 + Math.random()*110);
+    s.animate([
+      {transform:'translate(-50%,-50%) scale(.4)', opacity:1},
+      {transform:'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(1.15) rotate(' + (Math.random()*160-80) + 'deg)', opacity:0}
+    ], {duration:750 + Math.random()*350, easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish = (function(el){ return function(){ el.remove(); }; })(s);
+  }
+}
+document.getElementById('logoWrap').addEventListener('click', function(){
+  var img = document.getElementById('heroLogo'), r = img.getBoundingClientRect();
+  img.classList.remove('dance'); void img.offsetWidth; img.classList.add('dance');
+  spawnStars(r.left + r.width/2, r.top + r.height/2, 8);
+  if(navigator.vibrate) navigator.vibrate(15);
+});
+
+const WA_NUMBER = "963994733313";
+const CART_KEY = "cking_cart";
+const CATS = [
+  {id:"shawarma", name:"شاورما", icon:"🌯"},
+  {id:"smeals", name:"وجبات شاورما", icon:"🍱"},
+  {id:"broasted", name:"البروستد", icon:"🍗"},
+  {id:"wsand", name:"سندويش غربي", icon:"🥪"},
+  {id:"wmeals", name:"وجبات غربي", icon:"🍽️"},
+  {id:"pizza", name:"البيتزا", icon:"🍕"},
+  {id:"rice", name:"الرز والسلطات", icon:"🍚"}
+];
+const MENU = [
+  {id:"w1", cat:"shawarma", name:"شاورما عادي"},
+  {id:"w2", cat:"shawarma", name:"شاورما دبل"},
+  {id:"w3", cat:"shawarma", name:"شاورما تشيز"},
+  {id:"w4", cat:"shawarma", name:"شاورما صمون"},
+  {id:"v1", cat:"smeals", name:"وجبة عادية"},
+  {id:"v2", cat:"smeals", name:"وجبة دبل"},
+  {id:"v3", cat:"smeals", name:"وجبة اكسترا"},
+  {id:"v4", cat:"smeals", name:"وجبة بانيه"},
+  {id:"v5", cat:"smeals", name:"وجبة الملك (مشكل)"},
+  {id:"b1", cat:"broasted", name:"فروج بروستد"},
+  {id:"b2", cat:"broasted", name:"نص فروج بروستد"},
+  {id:"b3", cat:"broasted", name:"وجبة دبابيس"},
+  {id:"b4", cat:"broasted", name:"وجبة جوانح"},
+  {id:"s1", cat:"wsand", name:"سندويش غربي"},
+  {id:"s2", cat:"wsand", name:"بطاطا عادي"},
+  {id:"s3", cat:"wsand", name:"بطاطا دبل"},
+  {id:"s4", cat:"wsand", name:"سندويشة شيش"},
+  {id:"s5", cat:"wsand", name:"سندويشة فاهيتا"},
+  {id:"s6", cat:"wsand", name:"سندويشة مكسيكانو"},
+  {id:"s7", cat:"wsand", name:"سندويشة فراشيسكو"},
+  {id:"s8", cat:"wsand", name:"بطاطا سبيسيال"},
+  {id:"s9", cat:"wsand", name:"سوبريم سندويشة"},
+  {id:"s10", cat:"wsand", name:"سندويشة غواصة"},
+  {id:"s11", cat:"wsand", name:"سندويشة كريسبي"},
+  {id:"s12", cat:"wsand", name:"سندويشة زنجر"},
+  {id:"s13", cat:"wsand", name:"سندويشة مايتي زنجر"},
+  {id:"s14", cat:"wsand", name:"سندويشة اسكالوب"},
+  {id:"s15", cat:"wsand", name:"تايلندي"},
+  {id:"s16", cat:"wsand", name:"همبرغر لحم وجاج"},
+  {id:"s17", cat:"wsand", name:"سندويشة الملك"},
+  {id:"m1", cat:"wmeals", name:"وجبة شيش"},
+  {id:"m2", cat:"wmeals", name:"وجبة اسكالوب"},
+  {id:"m3", cat:"wmeals", name:"وجبة فاهيتا"},
+  {id:"m4", cat:"wmeals", name:"وجبة ماكسيكانو"},
+  {id:"m5", cat:"wmeals", name:"وجبة زنجر"},
+  {id:"m6", cat:"wmeals", name:"وجبة سوبريم"},
+  {id:"m7", cat:"wmeals", name:"وجبة غواصة"},
+  {id:"m8", cat:"wmeals", name:"وجبة الملك"},
+  {id:"z1", cat:"pizza", name:"بيتزا مارغريتا"},
+  {id:"z2", cat:"pizza", name:"بيتزا خضار"},
+  {id:"z3", cat:"pizza", name:"بيتزا الفصول الأربعة"},
+  {id:"z4", cat:"pizza", name:"بيتزا سجق"},
+  {id:"z5", cat:"pizza", name:"بيتزا كريسبي"},
+  {id:"z6", cat:"pizza", name:"بيتزا شاورما"},
+  {id:"z7", cat:"pizza", name:"بيتزا كابري"},
+  {id:"z8", cat:"pizza", name:"بيتزا ببيروني"},
+  {id:"z9", cat:"pizza", name:"بيتزا الملك"},
+  {id:"r1", cat:"rice", name:"رز كبسة"},
+  {id:"r2", cat:"rice", name:"رز مندي"},
+  {id:"r3", cat:"rice", name:"سيزر (سلطة)"},
+  {id:"r4", cat:"rice", name:"ذرة مع مايونيز (سلطة)"},
+  {id:"r5", cat:"rice", name:"كول سلو (سلطة)"}
+];
+const byId = Object.fromEntries(MENU.map(i=>[i.id,i]));
+let cart = {};
+try{ cart = JSON.parse(localStorage.getItem(CART_KEY)||"{}"); }catch(e){ cart={}; }
+let delivery = true;
+
+const $ = id => document.getElementById(id);
+
+function save(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+
+function renderChips(){
+  const el = $("chips");
+  el.innerHTML = `<button class="chip active" data-c="all">الكل 🍽️</button>` +
+    CATS.map(c=>`<button class="chip" data-c="${c.id}">${c.icon} ${c.name}</button>`).join("");
+  el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{
+    const t = b.dataset.c==="all" ? document.body : document.getElementById("cat-"+b.dataset.c);
+    if(t) t.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+}
+function stepperHTML(id){
+  const q = cart[id]||0;
+  if(q===0) return `<div class="stepper"><button class="add" onclick="chQty('${id}',1,event)">أضف +</button></div>`;
+  return `<div class="stepper"><button onclick="chQty('${id}',1,event)">+</button><span class="qty">${q}</span><button onclick="chQty('${id}',-1,event)">−</button></div>`;
+}
+function renderMenu(){
+  const main = $("menu");
+  main.innerHTML = CATS.map(c=>{
+    const items = MENU.filter(i=>i.cat===c.id);
+    return `<section class="cat" id="cat-${c.id}"><h2>${c.icon} ${c.name} <span class="count">${items.length}</span></h2>` +
+      items.map(i=>`<div class="item reveal"><div class="info"><div class="name">${i.name}</div></div><span id="st-${i.id}">${stepperHTML(i.id)}</span></div>`).join("") + `</section>`;
+  }).join("");
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.08});
+  main.querySelectorAll(".reveal").forEach((el,i)=>{ el.style.transitionDelay = (i%5)*35 + "ms"; io.observe(el); });
+  main.querySelectorAll(".item").forEach(card=>{
+    card.addEventListener("pointerdown", ()=>card.classList.add("press"));
+    ["pointerup","pointerleave","pointercancel"].forEach(ev=>card.addEventListener(ev, ()=>card.classList.remove("press")));
+  });
+  spyInit();
+  updateBar();
+}
+function spyInit(){
+  const chips = document.querySelectorAll(".chip");
+  const so = new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        chips.forEach(ch=>{
+          const on = ch.dataset.c===e.target.id.replace("cat-","");
+          ch.classList.toggle("active", on);
+          if(on) ch.scrollIntoView({block:"nearest", inline:"center", behavior:"smooth"});
+        });
+      }
+    });
+  }, {rootMargin:"-30% 0px -60% 0px"});
+  document.querySelectorAll("section.cat").forEach(s=>so.observe(s));
+}
+function flyToCart(x, y){
+  const bar = $("cartbar");
+  if(!bar.classList.contains("show")) return;
+  const r = bar.getBoundingClientRect();
+  const tx = r.left + r.width/2, ty = r.top + r.height/2;
+  const dot = document.createElement("div");
+  dot.className = "flyDot"; dot.textContent = "👑";
+  dot.style.left = (x-13) + "px"; dot.style.top = (y-13) + "px";
+  document.body.appendChild(dot);
+  const dx = tx-x, dy = ty-y;
+  dot.animate([
+    {transform:"translate(0,0) scale(1) rotate(0deg)", opacity:1},
+    {transform:`translate(${dx*.5}px, ${dy-130}px) scale(.95) rotate(160deg)`, opacity:1, offset:.55},
+    {transform:`translate(${dx}px, ${dy}px) scale(.2) rotate(320deg)`, opacity:.5}
+  ], {duration:680, easing:"cubic-bezier(.3,.7,.4,1)"}).onfinish = ()=>dot.remove();
+}
+function chQty(id,d,ev){
+  let sx=null, sy=null;
+  if(d>0 && ev && ev.currentTarget){
+    const r = ev.currentTarget.getBoundingClientRect();
+    sx = r.left + r.width/2; sy = r.top + r.height/2;
+  }
+  cart[id]=(cart[id]||0)+d;
+  if(cart[id]<=0) delete cart[id];
+  save();
+  const wrap = $("st-"+id);
+  if(wrap) wrap.innerHTML = stepperHTML(id);
+  updateBar();
+  if(d>0){
+    if(navigator.vibrate) navigator.vibrate(10);
+    if(sx!==null) flyToCart(sx, sy);
+    const bar = $("cartbar"); bar.classList.remove("pulse"); void bar.offsetWidth; bar.classList.add("pulse");
+  }
+}
+function updateBar(){
+  const n = cartCount(), bar = $("cartbar");
+  if(n===0){ bar.classList.remove("show"); return; }
+  bar.classList.add("show");
+  $("cartN").textContent = `🛒 ${n} ${n===1?"صنف":n===2?"صنفان":"أصناف"} بالسلة`;
+  $("cartT").textContent = "راجع طلبك وأكد الإرسال 👈";
+}
+function openOrder(){
+  if(cartCount()===0) return;
+  const r = $("goOrder").getBoundingClientRect();
+  spawnStars(r.left + r.width/2, r.top, 7);
+  $("orderLines").innerHTML = Object.entries(cart).map(([id,q])=>{
+    const i=byId[id];
+    return `<div class="ln"><span>${i.name}</span><span>× ${q}</span></div>`;
+  }).join("");
+  $("overlay").classList.add("show");
+  document.body.style.overflow="hidden";
+}
+function closeOrder(){ $("overlay").classList.remove("show"); document.body.style.overflow=""; }
+
+$("goOrder").onclick = openOrder;
+$("cancelOrder").onclick = closeOrder;
+$("overlay").addEventListener("click", e=>{ if(e.target===$("overlay")) closeOrder(); });
+$("segD").onclick = ()=>{ delivery=true; $("segD").classList.add("active"); $("segP").classList.remove("active"); $("addrField").style.display=""; };
+$("segP").onclick = ()=>{ delivery=false; $("segP").classList.add("active"); $("segD").classList.remove("active"); $("addrField").style.display="none"; };
+
+$("sendWa").onclick = ()=>{
+  const name=$("fName").value.trim(), phone=$("fPhone").value.trim();
+  if(!name){ alert("فضلاً اكتب الاسم الكريم"); $("fName").focus(); return; }
+  if(!phone){ alert("فضلاً اكتب رقم الهاتف"); $("fPhone").focus(); return; }
+  const addr=$("fAddr").value.trim(), notes=$("fNotes").value.trim();
+  const L=[];
+  L.push("👑 طلب جديد — ملك الدجاج");
+  L.push("———————————");
+  Object.entries(cart).forEach(([id,q])=>{ const i=byId[id]; L.push(`${q} × ${i.name}`); });
+  L.push("———————————");
+  L.push(`👤 الاسم: ${name}`);
+  L.push(`📞 الهاتف: ${phone}`);
+  L.push(delivery ? `🛵 توصيل إلى: ${addr||"—"}` : "🏃 استلام من المطعم");
+  if(notes) L.push(`📝 ملاحظات: ${notes}`);
+  window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(L.join("\n")), "_blank");
+};
+
+renderChips(); renderMenu();
+</script>
+
+<script>
+/* Menu-open tracking (2026-10-19): fire-and-forget ping so Ali can see which
+   restaurant owner opened their menu demo link. No cookies, no PII — the server
+   only stores the menu slug + timestamp (+hashed IP for country, same as the
+   clinic demos' analytics). One ping per browser tab session. */
+(function(){try{
+  var m=location.pathname.match(/\/menu-demo\/([a-z0-9-]+)\/?(?:[?#]|$)/);
+  if(!m)return;
+  var slug=m[1];
+  if(sessionStorage.getItem('menu_open_logged')===slug)return;
+  sessionStorage.setItem('menu_open_logged',slug);
+  fetch('https://kindly-anaconda-422.convex.site/trackVisit',{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=UTF-8'},
+    body:JSON.stringify({type:'menu_open',label:slug,path:'/menu/'+slug}),
+    keepalive:true
+  }).catch(function(){});
+}catch(e){}})();
+</script>
+</body>
+</html>
